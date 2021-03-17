@@ -3,6 +3,8 @@ package com.project.selsal;
 import java.util.ArrayList;
 import java.util.Locale;
 
+import javax.servlet.http.HttpSession;
+
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -14,6 +16,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.project.selsal.dao.OrdersDao;
 import com.project.selsal.dao.ProductDao;
+import com.project.selsal.entities.Member;
 import com.project.selsal.entities.Orderdetail;
 import com.project.selsal.entities.Orders;
 import com.project.selsal.entities.Product;
@@ -63,4 +66,15 @@ public class OrderController {
 		int result = dao.productCount();
 		return result;
 	}
+	@RequestMapping(value = "/orderConfirm", method = RequestMethod.POST)
+	@ResponseBody
+	public String orderConfirm(@RequestParam int ordernum,HttpSession session) {
+		OrdersDao dao = sqlSession.getMapper(OrdersDao.class);
+		String email = (String) session.getAttribute("sessionemail");
+		Member member = dao.selectAddress(email);
+		String address = "우편번호:"+ member.getZipcode()+" / "+member.getAddress()+" , "+member.getDetailaddress(); 
+		dao.orderInsert(ordernum, email,address);
+		return "";
+	}
+	
 }

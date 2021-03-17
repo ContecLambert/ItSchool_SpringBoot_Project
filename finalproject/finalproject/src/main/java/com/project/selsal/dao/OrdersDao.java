@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import org.apache.ibatis.annotations.Mapper;
 import org.springframework.stereotype.Repository;
 
+import com.project.selsal.entities.Member;
 import com.project.selsal.entities.Orderdetail;
 import com.project.selsal.entities.Orders;
 
@@ -27,7 +28,11 @@ public interface OrdersDao {
 	
 	public ArrayList<Orders> selectAll();
 	
-	public ArrayList<Orderdetail>selectall();
+	public ArrayList<Orderdetail> selectall();
+	
+	public int orderInsert(int ordernum,String email,String address);
+	
+	public Member selectAddress(String email);
 //
 //	public int levelUpdate(Member member);
 //	

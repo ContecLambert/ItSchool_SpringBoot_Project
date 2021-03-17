@@ -6,23 +6,11 @@ import org.springframework.stereotype.Component;
 public class Orders {
 	private int ordernum;
 	private String email;
+	private String name;
 	private String orderadd;
-	private String orderadddetail;
+	private String date;
 	private int totprice;
-	private String datedate;
-	private int quantity;
-	
-	
-	
-	
-	
-
-	public int getQuantity() {
-		return quantity;
-	}
-	public void setQuantity(int quantity) {
-		this.quantity = quantity;
-	}
+	private int orderconfirm;
 	public int getOrdernum() {
 		return ordernum;
 	}
@@ -35,17 +23,23 @@ public class Orders {
 	public void setEmail(String email) {
 		this.email = email;
 	}
+	public String getName() {
+		return name;
+	}
+	public void setName(String name) {
+		this.name = name;
+	}
 	public String getOrderadd() {
 		return orderadd;
 	}
 	public void setOrderadd(String orderadd) {
 		this.orderadd = orderadd;
 	}
-	public String getOrderadddetail() {
-		return orderadddetail;
+	public String getDate() {
+		return date;
 	}
-	public void setOrderadddetail(String orderadddetail) {
-		this.orderadddetail = orderadddetail;
+	public void setDate(String date) {
+		this.date = date;
 	}
 	public int getTotprice() {
 		return totprice;
@@ -53,14 +47,15 @@ public class Orders {
 	public void setTotprice(int totprice) {
 		this.totprice = totprice;
 	}
-	public String getDatedate() {
-		return datedate;
+	public int getOrderconfirm() {
+		return orderconfirm;
 	}
-	public void setDatedate(String datedate) {
-		this.datedate = datedate;
+	public void setOrderconfirm(int orderconfirm) {
+		this.orderconfirm = orderconfirm;
 	}
 	
-
-
+	
+	
+	
 
 }

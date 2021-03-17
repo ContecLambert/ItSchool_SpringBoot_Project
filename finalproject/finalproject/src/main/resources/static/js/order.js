@@ -22,13 +22,24 @@ $(document).ready(function() {
 		});
 
 	});
-	
-	$('#nofirmorderlist').DataTable({
-		deferRender: true,
-		scrollY: 360,
-		scrollCollapse: true
+	$('#orderconfirm').on('click',function(){
+		var ordernum = $('#ordernum').val();
+		$.ajax({
+		   type: 'POST',
+		   datatype: 'json',
+		   data:{ordernum:ordernum},
+		   url: 'orderConfirm',
+		   success: function(data) {
+		      alert("주문이 완료되었습니다.");
+		   },
+		   error: function(xhr, status, error) {
+		      alert('ajax error : ' + xhr.status + error);
+		   }
+		});
 	});
+	
+	
 
 
 
-});
+})

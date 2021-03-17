@@ -17,8 +17,22 @@
 		)
 	</insert>
 	
+	<select id="selectAddress" resultType="com.project.selsal.entities.member">
+		select zipcode,address,detailaddress from member where email = #{email};
+	</select>
+	
+	<insert id="orderInsert">
+		insert orders(
+		ordernum,email,orderadd,date,totprice,name
+		)values(
+		#{ordernum},#{email},#{address},now(),
+		(select sum(proprice) from orderdetail A where ordernum = #{ordernum}),
+		(select name from member B where email = #{email})
+		)
+	</insert>
+	
 	<select id="maxOrderNum" resultType="Integer">
-		select ifnull(max(ordernum),1) from orders;
+		select ifnull(max(ordernum)+1,1) from orderdetail;
 	</select>
 	
 	
