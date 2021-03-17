@@ -23,7 +23,12 @@ $(document).ready(function() {
 
 	});
 	
+	$('#nofirmorderlist').DataTable({
+		deferRender: true,
+		scrollY: 360,
+		scrollCollapse: true
+	});
 
 
 
-})
+});
