@@ -69,7 +69,7 @@ public class AdminController {
 		
 		ProductDao dao = sqlSession.getMapper(ProductDao.class);
 		dao.Stockadd2(codename);
-		dao.Stockadd1(codename);
+		dao.Stockadd1(code);
 		
 		return "redirect:adminList";
 	}

@@ -97,7 +97,7 @@
 		(SELECT ifnull(MAX(seq)+1,1 ) FROM productdetail A where code=#{code}),
 		#{code},(select name from product B where code =#{code}),
 		#{saleqty},
-		stock-#{saleqty},now() 
+		(select stock from product C where code=#{code})-#{saleqty},now() 
 		)
 		
 	</insert>

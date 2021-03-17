@@ -83,7 +83,7 @@ public class OrderController {
 		OrdersDao dao = sqlSession.getMapper(OrdersDao.class);
 		String email = (String) session.getAttribute("sessionemail");
 		Member member = dao.selectAddress(email);
-		String address = "우편번호:"+ member.getZipcode()+" / "+member.getAddress()+" , "+member.getDetailaddress(); 
+		String address = "�슦�렪踰덊샇:"+ member.getZipcode()+" / "+member.getAddress()+" , "+member.getDetailaddress(); 
 		dao.orderInsert(ordernum, email,address);
 		return "";
 	}
@@ -112,7 +112,7 @@ public class OrderController {
 		
 		for(Orders order:orderlist) {
 			if(order.getCompletedate()== null) {
-				order.setCompletedate("접수 전");
+				order.setCompletedate("처리 전");
 			}
 		}
 		model.addAttribute("orderlist",orderlist);
@@ -131,11 +131,13 @@ public class OrderController {
 	@RequestMapping(value = "/QuickorderConfirm", method = RequestMethod.GET)
 	public String QuickorderConfirm(@RequestParam int ordernum,HttpSession session) throws Exception {
 		OrdersDao orderdao = sqlSession.getMapper(OrdersDao.class);
+		ProductDao productdao = sqlSession.getMapper(ProductDao.class);
 		orderdao.changeConfirm(ordernum);
 		ArrayList<Orderdetail> saleproduct = orderdao.selectSaleProduct(ordernum);
 		for(Orderdetail salepro:saleproduct) {
 			String code = String.valueOf(salepro.getProcode());
 //			orderdao.selectNowStock
+			productdao.Stockadd1(Integer.parseInt(code));
 			orderdao.insertSaleProduct(code,salepro.getQty());
 		}
 		int totprice = orderdao.OrderTotalPrice(ordernum);
