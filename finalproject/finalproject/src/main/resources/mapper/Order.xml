@@ -65,7 +65,7 @@
 		select name,stock from product
 	</select>
 	
-	<select id="noConfirmList" resultType="com.project.selsal.entites.Orders">
+	<select id="noConfirmList" resultType="com.project.selsal.entities.Orders">
 		select * from orders where orderconfirm = 0;
 	</select>
 	
