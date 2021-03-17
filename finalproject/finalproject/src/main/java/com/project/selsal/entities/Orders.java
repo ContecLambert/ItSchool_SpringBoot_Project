@@ -11,6 +11,8 @@ public class Orders {
 	private String date;
 	private int totprice;
 	private int orderconfirm;
+	private String completedate;
+	
 	public int getOrdernum() {
 		return ordernum;
 	}
@@ -52,6 +54,12 @@ public class Orders {
 	}
 	public void setOrderconfirm(int orderconfirm) {
 		this.orderconfirm = orderconfirm;
+	}
+	public String getCompletedate() {
+		return completedate;
+	}
+	public void setCompletedate(String completedate) {
+		this.completedate = completedate;
 	}
 	
 	

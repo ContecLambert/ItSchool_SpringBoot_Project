@@ -8,6 +8,7 @@ public class Product {
 	private String name;
 	private int buyprice;
 	private int saleprice;
+	private int saleqty;
 	private int stock;
 	private String image;
 	private String productexp;
@@ -60,6 +61,12 @@ public class Product {
 	}
 	public void setCalorie(int calorie) {
 		this.calorie = calorie;
+	}
+	public int getSaleqty() {
+		return saleqty;
+	}
+	public void setSaleqty(int saleqty) {
+		this.saleqty = saleqty;
 	}
 
 	

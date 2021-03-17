@@ -19,15 +19,12 @@
 			<div class = "ui grid three wide column"></div>
 			
 			<div class = "ui grid eleven wide column memin" id="adminlistback" align="center">
-				<div class="ui grid sixteen wide column">
-					<div style="float:right"><button class="ui blue basic button" type="button" 
-					onclick="location.href='productInsert'">제품 등록</button></div>				
-				</div>
 				<table id="nofirmorderlist" class="display nowrap">
 					<thead>	
 						<tr> 
 							<td>주문번호</td>
 							<td>회원 명</td>						
+							<td>주문시간</td>						
 							<td>배달 받을곳</td>
 							<td>총 금액</td>
 							<td>주문 접수</td>						
@@ -38,10 +35,11 @@
 						<tr th:each="item : ${noconfirmlist}">
 							<td th:text="${item.ordernum}"></td>
 							<td th:text="${item.name}"></td>
+							<td th:text="${item.date}"></td>
 							<td th:text="${item.orderadd}"></td>
 							<td th:text="|${item.totprice}원|"></td>
 							<td>
-								<a href="#">주문 접수</a>
+								<a  th:href="@{QuickorderConfirm(ordernum=${item.ordernum})}">주문 접수</a>
 							</td>
 							<td>
 								<a href="#">주문 취소</a>

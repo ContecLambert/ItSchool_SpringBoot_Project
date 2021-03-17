@@ -16,9 +16,9 @@
          </div>
          
          
-         <div class = "ui grid three wide column"></div>
+         <div class = "ui grid two wide column"></div>
          
-         <div class = "ui grid eleven wide column memin" align="center">
+         <div class = "ui grid thirteen wide column memin" align="center">
          	<input type="hidden" name="ordernum" id="ordernum" th:value="${ordernum}">
 			<div th:each="product: ${products}" style="float:left">
 				<div>
@@ -31,25 +31,26 @@
 						<span th:text="|${product.calorie} kcal|"></span><br>
 						<span th:text="|${product.saleprice} 원|"></span><br>
 						<span th:text="${product.productexp}"></span><br>
-						<select th:id="|qty${product.code}|" class="ui dropdown">
+						<select th:if="${product.stock}!=0" th:id="|qty${product.code}|" class="ui dropdown">
 							<option value="1">1</option>
 							<option value="2">2</option>
 						</select >
-						<button class= "ui green basic button btn-cartin-act" th:data-num="${product.code}" type="button">장바구니 담기</button>				
-						<button th:id="|cartout${product.code}|" class= "ui red basic button" type="button">장바구니 삭제</button>				
+						<button th:if="${product.stock}!=0" class= "ui green basic button btn-cartin-act" th:data-num="${product.code}" type="button">장바구니 담기</button>				
+						<button th:if="${product.stock}!=0"  th:id="|cartout${product.code}|" class= "ui red basic button" type="button">장바구니 삭제</button>
+						<button th:if="${product.stock}==0" class="ui black basis button" disabled="disabled" style="width:300px">매진</button>				
 					</div>
 				</div>
 			</div>
 			            
             <div class = "ui grid sixteen wide column memin" align="center">
             <button class="ui inverted green button" type ="button" id="orderconfirm">등록하기</button>
-            <button class="ui inverted red button" onclick="location.href='index'">취소</button>
+            <button class="ui inverted red button" type="button" id="ordercancle">취소</button>
             
             </div>   
          </div>
          
          
-         <div class = "ui grid three wide column"></div>
+         <div class = "ui grid two wide column"></div>
          
          
       </div>
