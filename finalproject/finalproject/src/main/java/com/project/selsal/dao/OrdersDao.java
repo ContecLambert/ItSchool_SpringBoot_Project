@@ -26,13 +26,11 @@ public interface OrdersDao {
 	
 	public int maxOrderNum();
 	
-	public ArrayList<Orders> selectAll();
-	
-	public ArrayList<Orderdetail> selectall();
-	
 	public int orderInsert(int ordernum,String email,String address);
 	
 	public Member selectAddress(String email);
+	
+	public ArrayList<Orders> noConfirmList();
 //
 //	public int levelUpdate(Member member);
 //	

@@ -19,7 +19,9 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.project.selsal.dao.MemberDao;
+import com.project.selsal.dao.OrdersDao;
 import com.project.selsal.dao.ProductDao;
+import com.project.selsal.entities.Orders;
 import com.project.selsal.entities.Product;
 
 @Controller
@@ -41,6 +43,10 @@ public class AdminController {
 		MemberDao memberdao = sqlSession.getMapper(MemberDao.class);
 		int membercnt = memberdao.selectAllcount();
 		model.addAttribute("membercnt",membercnt);
+		
+		OrdersDao orderdao = sqlSession.getMapper(OrdersDao.class);
+		ArrayList<Orders> noconfirmorder = orderdao.noConfirmList();
+		model.addAttribute("noconfirmorder",noconfirmorder);
 		
 		
 

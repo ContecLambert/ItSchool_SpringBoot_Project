@@ -17,7 +17,7 @@
 		)
 	</insert>
 	
-	<select id="selectAddress" resultType="com.project.selsal.entities.member">
+	<select id="selectAddress" resultType="com.project.selsal.entities.Member">
 		select zipcode,address,detailaddress from member where email = #{email};
 	</select>
 	
@@ -63,6 +63,10 @@
 	</insert>
 	<select id="productChartData" resultType="com.project.selsal.entities.Product">
 		select name,stock from product
+	</select>
+	
+	<select id="noConfirmList" resultType="com.project.selsal.entites.Orders">
+		select * from orders where orderconfirm = 0;
 	</select>
 	
 </mapper>
