@@ -53,8 +53,4 @@
 		#{code},#{name},20-(select stock from product B where code=#{code}),20,now()
 		)
 	</insert>
-	<select id="productChartData" resultType="com.project.selsal.entities.Product">
-		select name,stock from product
-	</select>
-	
 </mapper>

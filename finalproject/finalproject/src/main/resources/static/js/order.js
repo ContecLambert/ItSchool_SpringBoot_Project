@@ -3,6 +3,24 @@ function order(){
 }
 
 $(document).ready(function() {
+	$('#QuickOrderCancle').on('click',function(){
+		var row = $(this).closest('tr');
+		var td = row.children();
+		var ordernum = td.eq(0).text();
+		$.ajax({
+		   	type: 'POST',
+		   	datatype: 'json',
+ 			data:{ordernum:ordernum},
+		   	url: 'QuickOrderCancle',
+		   	success: function(data) {
+				alert("주문이 취소처리되었습니다.")
+				document.location.href = "index";
+			},
+		   	error: function(xhr, status, error) {
+			alert('ajax error : ' + xhr.status + error);
+		   	}
+		});
+	});
 	$('#orderReceive').on('click',function(){
 		var row = $(this).closest('tr');
 		var td = row.children();

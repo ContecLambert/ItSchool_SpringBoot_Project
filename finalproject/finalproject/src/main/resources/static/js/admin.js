@@ -11,10 +11,6 @@ function outstockChange2() {
 
 
 $(document).ready(function() {
-	$('#loginbtn').on('click',function(){
-		('#memberLoginform').attr('form','memberLoginUP')
-		('#memberLoginform').submit();
-	});
 	var name = [];
 	var stock = [];
 	$.ajax({
@@ -32,9 +28,9 @@ $(document).ready(function() {
 			alert('ajax error : ' + xhr.status + error);
 		}
 	});
-	$("#test1").on('click',function(){
-		var ctx = document.getElementById("myChart").getContext('2d');
-        var myChart = new Chart(ctx, {
+	$("#adminChart1").on('click',function(){
+		var ctx = document.getElementById("Chart1").getContext('2d');
+        var Chart1 = new Chart(ctx, {
            type: 'bar',
            data: {
               labels: name,
@@ -44,12 +40,29 @@ $(document).ready(function() {
                  data: stock, //컨트롤러에서 모델로 받아온다.
                  backgroundColor: [
                     'rgba(255, 99, 132, 0.2)',
-                    'rgba(54, 162, 235, 0.2)'
-
+                    'rgba(54, 162, 235, 0.2)',
+                   	'rgba(120, 52, 50, 0.2)',
+					'rgba(99, 84, 20, 0.2)',
+					'rgba(200, 120, 230, 0.2)',
+					'rgba(170, 20, 180, 0.2)',
+					'rgba(221, 2, 92, 0.2)',
+					'rgba(142, 37, 168, 0.2)',
+					'rgba(196, 37, 140, 0.2)',
+					'rgba(112, 77, 250, 0.2)',
+					'rgba(255, 55, 70, 0.2)'										
                  ],
                  borderColor: [
-                    'rgba(255,99,132,1)',
-                    'rgba(54, 162, 235, 1)'
+				    'rgba(255, 99, 132, 1)',
+                    'rgba(54, 162, 235, 1)',
+                   	'rgba(120, 52, 50, 1)',
+					'rgba(99, 84, 20, 1)',
+					'rgba(200, 120, 230, 1)',
+					'rgba(170, 20, 180, 1)',
+					'rgba(221, 2, 92, 1)',
+					'rgba(142, 37, 168, 1)',
+					'rgba(196, 37, 140, 1)',
+					'rgba(112, 77, 250, 1)',
+					'rgba(255, 55, 70, 1)'	
 
                  ],
                  borderWidth: 1
@@ -72,6 +85,80 @@ $(document).ready(function() {
         });
 	});
 	
+	var salename = [];
+	var salestock = [];
+	$.ajax({
+		type: 'POST',
+		datatype: 'json',
+		url: 'SaleProductDataSelect',
+		success: function(data) {
+			for (var i = 0; i < data.length; i++) {
+				salename.push(data[i].name);
+				salestock.push(data[i].stock);
+			}
+			
+		},
+		error: function(xhr, status, error) {
+			alert('ajax error : ' + xhr.status + error);
+		}
+	});
+	$("#adminChart1").on('click',function(){
+		var ctx = document.getElementById("Chart1").getContext('2d');
+        var Chart1 = new Chart(ctx, {
+           type: 'bar',
+           data: {
+              labels: name,
+              datasets: [{
+
+
+                 data: stock, //컨트롤러에서 모델로 받아온다.
+                 backgroundColor: [
+                    'rgba(255, 99, 132, 0.2)',
+                    'rgba(54, 162, 235, 0.2)',
+                   	'rgba(120, 52, 50, 0.2)',
+					'rgba(99, 84, 20, 0.2)',
+					'rgba(200, 120, 230, 0.2)',
+					'rgba(170, 20, 180, 0.2)',
+					'rgba(221, 2, 92, 0.2)',
+					'rgba(142, 37, 168, 0.2)',
+					'rgba(196, 37, 140, 0.2)',
+					'rgba(112, 77, 250, 0.2)',
+					'rgba(255, 55, 70, 0.2)'										
+                 ],
+                 borderColor: [
+				    'rgba(255, 99, 132, 1)',
+                    'rgba(54, 162, 235, 1)',
+                   	'rgba(120, 52, 50, 1)',
+					'rgba(99, 84, 20, 1)',
+					'rgba(200, 120, 230, 1)',
+					'rgba(170, 20, 180, 1)',
+					'rgba(221, 2, 92, 1)',
+					'rgba(142, 37, 168, 1)',
+					'rgba(196, 37, 140, 1)',
+					'rgba(112, 77, 250, 1)',
+					'rgba(255, 55, 70, 1)'	
+
+                 ],
+                 borderWidth: 1
+              }
+              ]
+           },
+           options: {
+              scales: {
+                 yAxes: [{
+                    ticks: {
+                       beginAtZero: true
+                    }
+                 }]
+              },
+			legend: {
+			      display: false,
+			      
+			    },
+           }
+        });
+	});
+
 	$(".imagebtn").on('click', function() {
 		$('#imagefile').click();
 		$('#imagefile').change(function() {

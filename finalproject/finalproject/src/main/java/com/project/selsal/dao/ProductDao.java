@@ -23,6 +23,5 @@ public interface ProductDao {
 	public int Stockadd1(String code);
 	
 	public int Stockadd2(HashMap hashmap);
-	
-	public ArrayList<Product> productChartData(); 
+
 }
