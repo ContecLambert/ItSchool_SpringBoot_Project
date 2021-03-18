@@ -3,16 +3,24 @@ function order(){
 }
 
 $(document).ready(function() {
-	$('#Sessionchk1').on('click',function(){
+	$('#orderReceive').on('click',function(){
+		var row = $(this).closest('tr');
+		var td = row.children();
+		var ordernum = td.eq(0).text();
 		$.ajax({
 		   	type: 'POST',
 		   	datatype: 'json',
-		   	url: 'sessionCheck',
+ 			data:{ordernum:ordernum},
+		   	url: 'NowStockChk',
 		   	success: function(data) {
-				if(data=="n"){
-		      		alert("권한이 없습니다. 로그인을 하십시오.")
+				if(data=="end"){
+		      		alert("이 주문을 마지막으로 매진되는 재고가 있습니다. 확인바랍니다.");
+					document.location.href = "QuickorderConfirm?ordernum=" + ordernum;					
+				}else if(data=="n"){
+					alert("주문 재고 중 부족한 재고가 있습니다. 확인바랍니다.");
 				}else{
-					document.location.href = "freeBoardList";
+					alert("주문 접수처리가 완료되었습니다.");
+					document.location.href = "QuickorderConfirm?ordernum=" + ordernum;
 				}
 			},
 		   	error: function(xhr, status, error) {
@@ -20,6 +28,7 @@ $(document).ready(function() {
 		   	}
 		});
 	});
+	
 	$('#Sessionchk2').on('click',function(){
 		$.ajax({
 		   	type: 'POST',
@@ -65,7 +74,7 @@ $(document).ready(function() {
 	   		url: 'orderConfirm',
 	   		success: function(data) {
 	      		alert("주문이 완료되었습니다.");
-				document.location.href = "index";
+				document.location.href = "membermypage";
 		   	},
 		   	error: function(xhr, status, error) {
 		   	   alert('ajax error : ' + xhr.status + error);
@@ -89,6 +98,7 @@ $(document).ready(function() {
 		});
 	});
 	$('#nofirmorderlist').DataTable({
+		aaSorting: [],
 		deferRender: true,
 		scrollY: 360,
 		scrollCollapse: true

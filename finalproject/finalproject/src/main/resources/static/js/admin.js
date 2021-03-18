@@ -11,6 +11,10 @@ function outstockChange2() {
 
 
 $(document).ready(function() {
+	$('#loginbtn').on('click',function(){
+		('#memberLoginform').attr('form','memberLoginUP')
+		('#memberLoginform').submit();
+	});
 	var name = [];
 	var stock = [];
 	$.ajax({

@@ -2,7 +2,6 @@ package com.project.selsal;
 
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.Locale;
 import java.util.Properties;
 
@@ -27,6 +26,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.project.selsal.dao.MemberDao;
+import com.project.selsal.dao.OrdersDao;
 import com.project.selsal.entities.Member;
 
 
@@ -80,10 +80,18 @@ public class MemberController {
 		String email = dao.selectIdFind(name,gender,birth);
 		return email;
 	}
-	@RequestMapping(value = "/idfindUP", method = RequestMethod.GET)
-	public String idfindUP(Model model,@ModelAttribute Member member) {
-		return "index";
+	
+	
+	
+	@RequestMapping(value = "/PWFindUP", method = RequestMethod.POST)
+	@ResponseBody
+	public String PWFindUP(Model model,@RequestParam String email,@RequestParam int birth,@RequestParam int gender) throws Exception {
+		MemberDao dao = sqlSession.getMapper(MemberDao.class);
+		String password = dao.selectPWFind(email,gender,birth);
+		return password;
 	}
+	
+
 
 	
 	@RequestMapping(value = "/memberlogout", method = RequestMethod.GET)
@@ -166,13 +174,26 @@ public class MemberController {
 	
 	@RequestMapping(value = "/memberUpdateAdminSave", method = RequestMethod.POST)
     public String memberUpdateAdminSave( Model model,HttpSession session, @ModelAttribute Member member) throws IOException {  
-    	 MemberDao dao = sqlSession.getMapper(MemberDao.class);
-    	String encodepassword = hashPassword(member.getPassword());
- 		member.setPassword(encodepassword);
-    	dao.updateRow(member);
-    	dao.levelUpdate(member);
-    	return "redirect:memberList";
-	}
+      MemberDao dao = sqlSession.getMapper(MemberDao.class);
+      OrdersDao orderdao = sqlSession.getMapper(OrdersDao.class);
+      String encodepassword = hashPassword(member.getPassword());
+      member.setPassword(encodepassword);
+      dao.updateRow(member);
+      int changelevel=0;
+      int totalorder = orderdao.AdminselectTotalOrder(member.getEmail());
+      if(0<=totalorder && totalorder<50000) {
+         changelevel = 5;
+      }else if(50000<=totalorder && totalorder<200000) {
+         changelevel = 4;
+      }else if(200000<=totalorder && totalorder<500000) {
+         changelevel = 3;
+      }else if(500000<=totalorder) {
+         changelevel = 2;
+      }
+      orderdao.AdminupdateMemlevel("sessionemail",changelevel);
+      
+       return "redirect:memberList";
+   }
 	
 	
 	@RequestMapping(value = "/emailConfirmAjax", method = RequestMethod.POST)
