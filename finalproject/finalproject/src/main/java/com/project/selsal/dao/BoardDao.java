@@ -18,6 +18,8 @@ public interface BoardDao {
 	
 	public ArrayList<Freeboard> selectPageListFreeBoard(BoardPaging boardpaging) throws Exception;
 	
+	public ArrayList<Freeboard> selectPageListFreeBoardPopular(BoardPaging boardpaging) throws Exception;
+	
 	public Freeboard selectOneFreeBoard(int f_seq) throws Exception;
 	
 	public Freeboard selectOneFreeBoard2(Freeboard freeboard) throws Exception;

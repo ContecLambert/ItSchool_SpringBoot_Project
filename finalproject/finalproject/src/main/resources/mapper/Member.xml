@@ -34,6 +34,9 @@
    <update id = "levelUpdate">
       update member set level =if(point>1500,6,9) where email=#{email}
    </update>
+   <select id="selectIdFind" resultType="string">
+   		select email from member where gender = #{gender} and birth = #{birth} and name = #{name}
+   </select>
   <!--  
    
 

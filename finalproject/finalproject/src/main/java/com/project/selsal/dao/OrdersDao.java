@@ -49,6 +49,8 @@ public interface OrdersDao {
 	public int updateOrderPoint(String email,int point);
 	
 	public int OrderTotalPrice(int ordernum);
+	
+	public int completedateUpdate(int ordernum);
 //
 //	public int levelUpdate(Member member);
 //	

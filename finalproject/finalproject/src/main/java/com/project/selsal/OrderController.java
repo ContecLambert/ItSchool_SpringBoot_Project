@@ -133,12 +133,13 @@ public class OrderController {
 		OrdersDao orderdao = sqlSession.getMapper(OrdersDao.class);
 		ProductDao productdao = sqlSession.getMapper(ProductDao.class);
 		orderdao.changeConfirm(ordernum);
+		orderdao.completedateUpdate(ordernum);
 		ArrayList<Orderdetail> saleproduct = orderdao.selectSaleProduct(ordernum);
 		for(Orderdetail salepro:saleproduct) {
 			String code = String.valueOf(salepro.getProcode());
 //			orderdao.selectNowStock
-			productdao.Stockadd1(Integer.parseInt(code));
 			orderdao.insertSaleProduct(code,salepro.getQty());
+			productdao.Stockadd1(code);
 		}
 		int totprice = orderdao.OrderTotalPrice(ordernum);
 		int point = (int) (totprice*0.05);

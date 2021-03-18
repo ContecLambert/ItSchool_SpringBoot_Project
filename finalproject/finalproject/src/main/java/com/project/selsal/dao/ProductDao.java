@@ -20,7 +20,7 @@ public interface ProductDao {
 	
 	public ArrayList<Product> selectdetailAll(String code) throws Exception;
 	
-	public int Stockadd1(HashMap hashmap);
+	public int Stockadd1(String code);
 	
 	public int Stockadd2(HashMap hashmap);
 	

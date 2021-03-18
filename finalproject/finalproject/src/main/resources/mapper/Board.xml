@@ -21,6 +21,11 @@
 		select * from freeboard order by f_ref desc, f_step asc limit #{startrow}, #{endrow};
 	</select>
 	
+	<select id="selectPageListFreeBoardPopular"
+		resultType="com.project.selsal.entities.Freeboard">
+		select * from freeboard order by f_hit desc, f_step asc limit #{startrow}, #{endrow};
+	</select>
+	
 	<select id="selectOneFreeBoard"
 		resultType="com.project.selsal.entities.Freeboard">
 		select * from freeboard where f_seq = #{f_seq}
@@ -77,10 +82,10 @@
 	</delete>
 	
 	<insert id="insertRowFreeBoardComment">
-	    insert into freeboardcomment (comment_num,f_seq,comment_name,comment_date,comment_parent,comment_content,comment_email)
+	    insert into freeboardcomment (comment_num,f_seq,comment_name,comment_date,comment_parent,comment_content,comment_email,date)
 	    values(
 	    (SELECT ifnull(MAX(comment_num)+1,1 ) FROM freeboardcomment freeboardcomment_alias),
-	    #{f_seq},#{comment_name},#{comment_date},0,#{comment_content},#{comment_email})
+	    #{f_seq},#{comment_name},#{comment_date},0,#{comment_content},#{comment_email},now())
 	</insert>
 	
 	<select id="selectOneFreeBoardComment"

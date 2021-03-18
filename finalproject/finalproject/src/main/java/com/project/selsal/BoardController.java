@@ -111,7 +111,38 @@ public class BoardController {
 		}
 
 		ArrayList<Freeboard> boards = dao.selectPageListFreeBoard(boardpaging);
+		model.addAttribute("rowcount",rowcount);
+		model.addAttribute("boards", boards);
+		model.addAttribute("pages", pages);
+		return "/board/freeboard_list";
+	}
+	
+	@RequestMapping(value = "/freeBoardListPopular", method = RequestMethod.GET)
+	public String freeBoardListPopular(Locale locale, Model model) throws Exception {
+		BoardDao dao = sqlSession.getMapper(BoardDao.class);
 
+		int rowcount = dao.selectCountFirstFreeBoard();
+		int pagesize = 10;
+		int page = 1;
+		int startrow = (page - 1) * pagesize;
+		int endrow = 10;
+		if (boardpaging.getFind() == null) {
+			boardpaging.setFind("");
+		}
+		boardpaging.setStartrow(startrow);
+		boardpaging.setEndrow(endrow);
+		int absPage = 1;
+		if (rowcount % pagesize == 0) {
+			absPage = 0;
+		}
+
+		int pagecount = rowcount / pagesize + absPage;
+		int pages[] = new int[pagecount];
+		for (int i = 0; i < pagecount; i++) {
+			pages[i] = i + 1;
+		}
+
+		ArrayList<Freeboard> boards = dao.selectPageListFreeBoardPopular(boardpaging);
 		model.addAttribute("rowcount",rowcount);
 		model.addAttribute("boards", boards);
 		model.addAttribute("pages", pages);
@@ -135,6 +166,91 @@ public class BoardController {
 		model.addAttribute("likecheck",likecheck);
 		model.addAttribute("freeboardcomments",freeboardcomments);
 		model.addAttribute("freeboardcomment",freeboardcomment);
+		
+		SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+		Date date = new Date();
+		String today = df.format(date);
+		int todayYear = Integer.parseInt(today.substring(0,4));
+		int todayMonth = Integer.parseInt(today.substring(5,7));
+		int todayDay = Integer.parseInt(today.substring(8,10));
+		int todayHour = Integer.parseInt(today.substring(11,13));
+		int todayMinute = Integer.parseInt(today.substring(14,16));
+		int todaySecond = Integer.parseInt(today.substring(17,19));
+		
+		for(Freeboardcomment a : freeboardcomments) {
+			String commentdate = a.getComment_date();
+			int commentYear = Integer.parseInt(commentdate.substring(0,4));
+			int commentMonth = Integer.parseInt(commentdate.substring(5,7));
+			int commentDay = Integer.parseInt(commentdate.substring(8,10));
+			int commentHour = Integer.parseInt(commentdate.substring(11,13));
+			int commentMinute = Integer.parseInt(commentdate.substring(14,16));
+			int commentSecond = Integer.parseInt(commentdate.substring(17,19));
+			if((todayYear-commentYear)==1) { //지난 년도
+				if(todayMonth<commentMonth) {
+					int month = 12 + todayMonth - commentMonth;
+					a.setComment_date(month+"개월 전");
+				}else {
+					int year = todayYear-commentYear;
+					a.setComment_date(year+"년 전");
+				}
+			}else if((todayYear-commentYear)>1) {
+				int year = todayYear-commentYear;
+				a.setComment_date(year+"년 전");
+			}else { //같은 년도
+				if((todayMonth-commentMonth)==1) { //지난 월
+					if(todayDay<commentDay) {
+						int day = 30 + todayDay - commentDay;
+						a.setComment_date(day+"일 전");
+					}else {
+						int month = todayMonth-commentMonth;
+						a.setComment_date(month+"개월 전");
+					}
+				}else if((todayMonth-commentMonth)>1) {
+					int month = todayMonth-commentMonth;
+					a.setComment_date(month+"개월 전");
+				}else { //같은 월
+					if((todayDay-commentDay)==1) { //지난 일
+						if(todayHour<commentHour) {
+							int hour = 24 + todayHour - commentHour;
+							a.setComment_date(hour+"시간 전");
+						}else {
+							int day = todayDay-commentDay;
+							a.setComment_date(day+"일 전");
+						}
+					}else if((todayDay-commentDay)>1) {
+						int day = todayDay-commentDay;
+						a.setComment_date(day+"일 전");
+					}else { //같은 일
+						if((todayHour-commentHour)==1) { //지난 시간
+							if(todayMinute<commentMinute) {
+								int minute = 60 + todayMinute - commentMinute;
+								a.setComment_date(minute+"분 전");
+							}else {
+								int hour = todayHour-commentHour;
+								a.setComment_date(hour+"시간 전");
+							}
+						}else if((todayHour-commentHour)>1) {
+							int hour = todayHour-commentHour;
+							a.setComment_date(hour+"시간 전");
+						}else { 
+							if((todayMinute-commentMinute)==1) { //1분 아래
+								if(todaySecond<commentSecond) {
+									a.setComment_date("방금 전");
+								}else { 
+									int minute = todayMinute-commentMinute;
+									a.setComment_date(minute+"분 전");
+								}
+							}else if((todayMinute-commentMinute)>1) { //1분 이상
+								int minute = todayMinute-commentMinute;
+								a.setComment_date(minute+"분 전");
+							}else { 
+								a.setComment_date("방금 전");
+							}
+						}
+					}
+				}
+			}
+		}
 		return "board/freeboard_detail";
 	}
 	
@@ -316,7 +432,7 @@ public class BoardController {
 	
 	@RequestMapping(value = "/freeBoardComment", method = RequestMethod.POST)
 	public String freeBoardComment(Model model, @ModelAttribute Freeboardcomment freeboardcomment, HttpServletRequest request,@RequestParam int f_seq,HttpSession session) throws Exception {
-		SimpleDateFormat df = new SimpleDateFormat("yyyy년 MM월 dd일 hh시 mm:ss");
+		SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 		Date date = new Date();
 		String today = df.format(date);
 		freeboardcomment.setComment_date(today);
@@ -335,6 +451,91 @@ public class BoardController {
 		model.addAttribute("like",like);
 		model.addAttribute("likecheck",likecheck);
 		model.addAttribute("freeboardcomments",freeboardcomments);
+		
+		SimpleDateFormat df2 = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+		Date date2 = new Date();
+		String today2 = df2.format(date2);
+		int todayYear = Integer.parseInt(today2.substring(0,4));
+		int todayMonth = Integer.parseInt(today2.substring(5,7));
+		int todayDay = Integer.parseInt(today2.substring(8,10));
+		int todayHour = Integer.parseInt(today2.substring(11,13));
+		int todayMinute = Integer.parseInt(today2.substring(14,16));
+		int todaySecond = Integer.parseInt(today2.substring(17,19));
+		
+		for(Freeboardcomment a : freeboardcomments) {
+			String commentdate = a.getComment_date();
+			int commentYear = Integer.parseInt(commentdate.substring(0,4));
+			int commentMonth = Integer.parseInt(commentdate.substring(5,7));
+			int commentDay = Integer.parseInt(commentdate.substring(8,10));
+			int commentHour = Integer.parseInt(commentdate.substring(11,13));
+			int commentMinute = Integer.parseInt(commentdate.substring(14,16));
+			int commentSecond = Integer.parseInt(commentdate.substring(17,19));
+			if((todayYear-commentYear)==1) { //지난 년도
+				if(todayMonth<commentMonth) {
+					int month = 12 + todayMonth - commentMonth;
+					a.setComment_date(month+"개월 전");
+				}else {
+					int year = todayYear-commentYear;
+					a.setComment_date(year+"년 전");
+				}
+			}else if((todayYear-commentYear)>1) {
+				int year = todayYear-commentYear;
+				a.setComment_date(year+"년 전");
+			}else { //같은 년도
+				if((todayMonth-commentMonth)==1) { //지난 월
+					if(todayDay<commentDay) {
+						int day = 30 + todayDay - commentDay;
+						a.setComment_date(day+"일 전");
+					}else {
+						int month = todayMonth-commentMonth;
+						a.setComment_date(month+"개월 전");
+					}
+				}else if((todayMonth-commentMonth)>1) {
+					int month = todayMonth-commentMonth;
+					a.setComment_date(month+"개월 전");
+				}else { //같은 월
+					if((todayDay-commentDay)==1) { //지난 일
+						if(todayHour<commentHour) {
+							int hour = 24 + todayHour - commentHour;
+							a.setComment_date(hour+"시간 전");
+						}else {
+							int day = todayDay-commentDay;
+							a.setComment_date(day+"일 전");
+						}
+					}else if((todayDay-commentDay)>1) {
+						int day = todayDay-commentDay;
+						a.setComment_date(day+"일 전");
+					}else { //같은 일
+						if((todayHour-commentHour)==1) { //지난 시간
+							if(todayMinute<commentMinute) {
+								int minute = 60 + todayMinute - commentMinute;
+								a.setComment_date(minute+"분 전");
+							}else {
+								int hour = todayHour-commentHour;
+								a.setComment_date(hour+"시간 전");
+							}
+						}else if((todayHour-commentHour)>1) {
+							int hour = todayHour-commentHour;
+							a.setComment_date(hour+"시간 전");
+						}else { 
+							if((todayMinute-commentMinute)==1) { //1분 아래
+								if(todaySecond<commentSecond) {
+									a.setComment_date("방금 전");
+								}else { 
+									int minute = todayMinute-commentMinute;
+									a.setComment_date(minute+"분 전");
+								}
+							}else if((todayMinute-commentMinute)>1) { //1분 이상
+								int minute = todayMinute-commentMinute;
+								a.setComment_date(minute+"분 전");
+							}else { 
+								a.setComment_date("방금 전");
+							}
+						}
+					}
+				}
+			}
+		}
 		return "board/freeboard_detail";
 	}
 

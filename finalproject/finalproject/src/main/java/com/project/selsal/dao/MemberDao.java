@@ -22,6 +22,8 @@ public interface MemberDao {
 //
 	public int levelUpdate(Member member);
 	
+	public String selectIdFind(String name,int gender,int birth);
+	
 	public int selectAllcount();
 	
 //

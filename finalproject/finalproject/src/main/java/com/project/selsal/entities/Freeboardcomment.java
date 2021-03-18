@@ -1,5 +1,7 @@
 package com.project.selsal.entities;
 
+import java.util.Date;
+
 import org.springframework.stereotype.Component;
 
 
@@ -12,6 +14,7 @@ public class Freeboardcomment {
 	private int comment_parent;
 	private String comment_content;
 	private String comment_email;
+	private Date date;
 	
 	public int getComment_num() {
 		return comment_num;
@@ -54,6 +57,12 @@ public class Freeboardcomment {
 	}
 	public void setComment_email(String comment_email) {
 		this.comment_email = comment_email;
+	}
+	public Date getDate() {
+		return date;
+	}
+	public void setDate(Date date) {
+		this.date = date;
 	}
 	
 }

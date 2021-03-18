@@ -141,8 +141,39 @@ $(document).ready(function() {
          });
       });
    });
+   $('.idfinder').on('click',function(){
+      $('.ui.basic.modal.first').modal('show');
+      $('#Idfindclick').on('click',function(){
+         var name = $('#name').val();
+         var gender = $('#gender').val();
+         var birth = $('#birth').val();
+          $.ajax({
+             type: 'POST',
+               data: {name: name,gender:gender,birth:birth},
+              datatype: 'json',
+              url: 'IdFindUP',
+              success: function(data) {
+               if(!data){
+                  $('.ui.basic.modal.first').modal('hide');
+                  $('.description').text("잘못된 정보입니다.")
+                  $('.ui.mini.modal.second').modal('show');
+               }else{
+                  $('.ui.basic.modal.first').modal('hide');
+                  $('.description').text("회원님의 이메일은 "+data+" 입니다")
+                  $('.ui.mini.modal.second').modal('show');
+               }
+             },
+             error: function(xhr, status, error) {
+                alert('ajax error : ' + xhr.status + error);
+             }
+          });
+      });
 
-
+   });
+   $('.passwordfinder').on('click',function(){
+      $('.ui.basic.modal.third').modal('show');
+   })
+   
    $('.Signup').keyup(function(){
       var gender = $('#gender').val();
       if(gender == 1 || gender == 3){

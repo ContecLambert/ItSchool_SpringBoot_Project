@@ -2,6 +2,7 @@ package com.project.selsal;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.Locale;
 import java.util.Properties;
 
@@ -72,6 +73,17 @@ public class MemberController {
 		}
 
 	}
+	@RequestMapping(value = "/IdFindUP", method = RequestMethod.POST)
+	@ResponseBody
+	public String IdFindUP(Model model,@RequestParam String name,@RequestParam int birth,@RequestParam int gender) throws Exception {
+		MemberDao dao = sqlSession.getMapper(MemberDao.class);
+		String email = dao.selectIdFind(name,gender,birth);
+		return email;
+	}
+	@RequestMapping(value = "/idfindUP", method = RequestMethod.GET)
+	public String idfindUP(Model model,@ModelAttribute Member member) {
+		return "index";
+	}
 
 	
 	@RequestMapping(value = "/memberlogout", method = RequestMethod.GET)
@@ -79,21 +91,25 @@ public class MemberController {
 		session.invalidate();
 		return "index";
 	}
-	
+
 	
 	
 	@RequestMapping(value = "/memberInsert", method = RequestMethod.GET)
 	public String memberInsert() {
 		return "member/member_insert";
 	}
+	
+	
 	@RequestMapping(value = "/memberInsertSave", method = RequestMethod.POST)
-	public String memberInsertSave(Model model,@ModelAttribute Member member) {
+	public String memberInsertSave(Model model,@ModelAttribute Member member ) {
 		MemberDao daomember = sqlSession.getMapper(MemberDao.class);
+		
 		String encodepassword = hashPassword(member.getPassword());
 		member.setPassword(encodepassword);
 		String authNum = randomNum();
 		String content = "회원가입을 환영합니다."+"인증번호 :"+authNum;
 		sendEmail(member.getEmail(), content, authNum);
+		
 		daomember.insertRow(member);
 		
 		
@@ -199,13 +215,6 @@ public class MemberController {
 			return "n";
 		}
 	}
-	
-	
-	
-	
-	
-	
-	
 	
 	
 	private String hashPassword(String plainTextPassword) {

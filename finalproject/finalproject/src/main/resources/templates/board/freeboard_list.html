@@ -20,16 +20,20 @@
 			
 			<div class = "ui grid five wide column"></div>
 			
-			<div class = "ui grid seven wide column memin" align="center">
-				<div class="content">
+			<div class = "ui grid seven wide column memin">
+				<div class="grid">
 					<p>총 <strong th:text="${rowcount}"></strong>건의 게시글이 있습니다</p>
+					<a style="cursor:pointer">
+						<span onclick="location.href='freeBoardList'">최신순</span>
+						<span>&nbsp&nbsp&nbsp</span>
+						<span onclick="location.href='freeBoardListPopular'">인기순</span>
+					</a>
 				</div>
 				<div class = "fluid ui labeled input" >
 					<table class="ui celled table">
 						<thead>
 							<tr style="text-align: center">
 								<th>번호</th>
-								<th>E-mail</th>
 								<th>이름</th>
 								<th>제목</th>
 								<th>첨부파일</th>
@@ -39,10 +43,8 @@
 						<tbody>
 							<tr th:each="board : ${boards}">
 								<td th:text="${board.f_seq}" style="text-align: center"></td>
-								<td th:text="${board.f_email}"></td>
 								<td th:text="${board.f_name}"></td>
 								<td>
-<!-- 									<a th:href="@{freeBoardDetail(f_seq=${board.f_seq})}"> -->
 									<a th:href="@{freeBoardDetail(f_seq=${board.f_seq})}">
 										<span th:text="${board.f_title}"></span>
 									</a>

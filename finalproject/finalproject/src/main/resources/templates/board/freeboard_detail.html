@@ -53,7 +53,7 @@
 						<button type="button" class="ui inverted green button" 
 						th:onclick="'location.href=\''+@{freeBoardUpdate(f_seq=${freeboard.f_seq})}+'\';'">수정</button>
 					</span>
-					<button class="ui inverted blue button" onclick="history.back(-1);">목록</button>
+					<button class="ui inverted blue button" onclick="location.href='freeBoardList'">목록</button>
 					<span th:if="${session.sessionemail != null}">
 						<button th:if="${session.sessionlevel le 1 || session.sessionemail==freeboard.f_email}"
 						type="button" class="ui inverted red button freeboarddelete">삭제</button>
@@ -84,7 +84,7 @@
 					<div th:each="freeboardcomments:${freeboardcomments}">
 						<input type="hidden" th:value="${freeboardcomments.comment_num}" id="comment_num">
 						<span th:text="${freeboardcomments.comment_name}" style="float:left"></span>
-						<span th:text="${freeboardcomments.comment_date}" style="float:right" id=commentDate></span>
+						<span th:text="${freeboardcomments.comment_date}" style="float:right" id="commentDate"></span>
 						<br>
 						<span th:text="${freeboardcomments.comment_content}" style="float:left; font-size:20px"></span>
 						<span th:if="${session.sessionemail != null}">
