@@ -13,6 +13,7 @@ function outstockChange2() {
 $(document).ready(function() {
 	var name = [];
 	var stock = [];
+	/*Bar Chart START*/
 	$.ajax({
 		type: 'POST',
 		datatype: 'json',
@@ -84,7 +85,9 @@ $(document).ready(function() {
            }
         });
 	});
+	/*Bar Chart END*/
 	
+	/*Pie Chart START*/
 	var salename = [];
 	var salestock = [];
 	$.ajax({
@@ -93,8 +96,8 @@ $(document).ready(function() {
 		url: 'SaleProductDataSelect',
 		success: function(data) {
 			for (var i = 0; i < data.length; i++) {
-				salename.push(data[i].name);
-				salestock.push(data[i].stock);
+				salename.push(data[i].salename);
+				salestock.push(data[i].salestock);
 			}
 			
 		},
@@ -102,16 +105,18 @@ $(document).ready(function() {
 			alert('ajax error : ' + xhr.status + error);
 		}
 	});
-	$("#adminChart1").on('click',function(){
-		var ctx = document.getElementById("Chart1").getContext('2d');
-        var Chart1 = new Chart(ctx, {
-           type: 'bar',
+	
+	
+	$("#adminChart2").on('click',function(){
+		var ctx = document.getElementById("Chart2").getContext('2d');
+        var Chart2 = new Chart(ctx, {
+           type: 'pie',
            data: {
-              labels: name,
+              labels: salename,
               datasets: [{
 
 
-                 data: stock, //컨트롤러에서 모델로 받아온다.
+                 data: salestock, //컨트롤러에서 모델로 받아온다.
                  backgroundColor: [
                     'rgba(255, 99, 132, 0.2)',
                     'rgba(54, 162, 235, 0.2)',
@@ -158,7 +163,7 @@ $(document).ready(function() {
            }
         });
 	});
-
+	/*Pie Chart END*/
 	$(".imagebtn").on('click', function() {
 		$('#imagefile').click();
 		$('#imagefile').change(function() {

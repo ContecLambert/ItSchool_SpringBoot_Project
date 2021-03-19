@@ -22,6 +22,7 @@ import com.project.selsal.dao.ChartDataDao;
 import com.project.selsal.dao.MemberDao;
 import com.project.selsal.dao.OrdersDao;
 import com.project.selsal.dao.ProductDao;
+import com.project.selsal.entities.ChartData;
 import com.project.selsal.entities.Product;
 
 @Controller
@@ -61,13 +62,14 @@ public class AdminController {
 		return data;
 	}
 	
-//	@RequestMapping(value = "/SaleProductDataSelect", method = RequestMethod.POST)
-//	@ResponseBody
-//	public ArrayList<Product> SaleProductDataSelect() {
-//		ChartDataDao dao = sqlSession.getMapper(ChartDataDao.class);
-//		
-//		return data;
-//	}
+	@RequestMapping(value = "/SaleProductDataSelect", method = RequestMethod.POST)
+	@ResponseBody
+	public ArrayList<ChartData> SaleProductDataSelect() {
+		ChartDataDao chartdao = sqlSession.getMapper(ChartDataDao.class);
+		ArrayList<ChartData> chartdata = chartdao.saleChartData();
+		
+		return chartdata;
+	}
 	
 	@RequestMapping(value = "/fastOrder", method = RequestMethod.GET)
 	public String fastOrder(Locale locale, Model model,@RequestParam String code,@RequestParam String name) throws Exception {

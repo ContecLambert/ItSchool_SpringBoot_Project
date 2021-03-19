@@ -89,8 +89,8 @@ public class OrderController {
 	}
 	
 	
-	@RequestMapping(value = "/noconfirmlist", method = RequestMethod.GET)
-	public String noConfirmList(Locale locale, Model model) throws Exception {
+	@RequestMapping(value = "/noconfirmList", method = RequestMethod.GET)
+	public String noconfirmList(Locale locale, Model model) throws Exception {
 		OrdersDao orderdao = sqlSession.getMapper(OrdersDao.class);
 		ArrayList<Orders> noconfirmlist = orderdao.noConfirmList();
 		model.addAttribute("noconfirmlist",noconfirmlist);

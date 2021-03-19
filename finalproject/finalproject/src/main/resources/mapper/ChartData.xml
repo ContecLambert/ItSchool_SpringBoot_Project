@@ -9,7 +9,11 @@
 	</select>
 	
 	<select id="saleChartData" resultType="com.project.selsal.entities.ChartData">
-		select (select ) as salename,salestock, from orderdetail where 
+		select name as salename, sum(salestock) as salestock from productdetail 
+		where MONTH(transdate) = (select MONTH(now()) from dual) group by name 
+	</select>
+	
+	<select id="GendersaleChartData" resultType="com.project.selsal.entities.ChartData">
 	</select>
 	
 </mapper>
