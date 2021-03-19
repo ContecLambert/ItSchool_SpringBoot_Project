@@ -84,12 +84,28 @@
       </div>
       
       <!--       ===============================비밀번호찾기 두번째 모달================================== -->
-      <div class="ui mini modal fourth" >
+      <div class="ui modal fourth" >
          <div class="ui icon header">
             <i class="archive icon"></i> 비밀번호
          </div>
          <div class="content" id ="idfinddes">
-            <div class = "description 2">
+            <div class = "description 2" style="text-align:center;width:850px">
+            	<div class = "ui labeled input" id="newPwdInsert1" style="display:none;">
+					<div class = "ui label">
+					<label style="width:30%">NEW 패스워드</label>
+					</div>
+					<input type = "password" id ="newpassword" style="width:40%"
+					 placeholder = "비밀번호를 입력하세요" required>
+				</div>
+				<div class = "ui labeled input" id="newPwdInsert2" style="display:none;">
+					<div class = "ui label">
+					<label style="width:30%">재입력</label>
+					</div>
+					<input type = "password"  id ="newpasswordchk"style="width:35%" 
+					 placeholder = "비밀번호를 다시 입력하시오" required>
+					<i class="green checkmark icon" id="newPwsame" style="display:none"></i>
+					<i class="red cancel icon" id="newPwdifferent" style="display:none"></i>
+				</div>
             </div>
          </div>
          <div class="actions">

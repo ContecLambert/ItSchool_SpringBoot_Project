@@ -169,38 +169,56 @@ $(document).ready(function() {
       });
    });
 
-   $('.passwordfinder').on('click',function(){
-      $('.ui.basic.modal.third').modal('show');
-       $('#PWfindclick').on('click',function(){
-         var email = $('#PWemail').val();
-           var gender = $('#PWgender').val();
-           var birth = $('#PWbirth').val();
-         $.ajax({
-            type: 'POST',
-            data: {email:email,gender:gender,birth:birth},
-            datatype: 'json',
-            url: 'PWFindUP',
-            success: function(data) {
-               if(data =="n"){
-                  $('.description.2').text("가입되지 않은 정보입니다.")
-                          $('.ui.mini.modal.fourth').modal('show');
-                  $('#newPWcreate').on('click',function(){
-                     $('#PWemail').val("");
-                       $('#PWgender').val("");
-                       $('#PWbirth').val("");
-                     $('.ui.basic.modal.third').modal('show');
-                  });
-               }else{
-                  $('.description.2').html("임시 비밀번호 : "+data+"<br>"+"임시 비밀번호로 로그인 후 비밀번호를 변경해주세요" );                  
-                        $('.ui.mini.modal.fourth').modal('show');
-                  $('#newPWcreate').on('click',function(){
-                     document.location.href = "memberLogin";
-                  });
-               }
-               },
-               error: function(xhr, status, error) {
-                   alert('ajax error : ' + xhr.status + error);
-                }
+	$('.passwordfinder').on('click',function(){
+		$('.ui.basic.modal.third').modal('show');
+       	$('#PWfindclick').on('click',function(){
+		var email = $('#PWemail').val();
+		var gender = $('#PWgender').val();
+		var birth = $('#PWbirth').val();
+        $.ajax({
+           type: 'POST',
+           data: {email:email,gender:gender,birth:birth},
+           datatype: 'json',
+           url: 'PWFindUP',
+           success: function(data) {
+			if(data =="n"){
+				$('.description.2').text("가입되지 않은 정보입니다.")
+				$('.ui.modal.fourth').modal('show');
+				$('#newPWcreate').on('click',function(){
+					$('#PWemail').val("");
+					$('#PWgender').val("");
+					$('#PWbirth').val("");
+					$('.ui.basic.modal.third').modal('show');
+				});
+			}else{
+				$('#newPwdInsert1').css('display','block')
+				$('#newPwdInsert2').css('display','block')
+				$('.ui.modal.fourth').modal('show');
+				var newPwd = $('#newpassword').text();
+				$('#newPWcreate').on('click',function(){
+					$('.ui.modal.fourth').modal('hide');
+					$.ajax({
+			        	type: 'POST',
+			            data: {newPwd: newPwd,email :email},
+			            datatype: 'json',
+			            url: 'PwdUpdate',
+			            success: function(data) {
+			        		$('.description.2').text("성공적으로 변경되었습니다.")
+							$('.ui.modal.fourth').modal('show');
+							document.location.href = "memberLogin";
+      
+			            },
+			            error: function(xhr, status, error) {
+			               alert('ajax error : ' + xhr.status + error);
+			            }
+					});
+					
+                 	});
+              	}
+			},
+			error: function(xhr, status, error) {
+				alert('ajax error : ' + xhr.status + error);
+			}
          });
       });
    });
@@ -225,6 +243,17 @@ $(document).ready(function() {
       }else if(passwordchk!=password){
          $('#pwsame').css("display","none")
          $('#pwdifferent').css("display","block")
+      }
+   });
+   $('#newpasswordchk').keyup(function(){
+      var passwordchk = $('#newpasswordchk').val();
+      var password = $('#newpassword').val();
+      if (passwordchk==password){
+         $('#newPwdifferent').css("display","none")
+         $('#newPwsame').css("display","block")
+      }else if(passwordchk!=password){
+         $('#newPwsame').css("display","none")
+         $('#newPwdifferent').css("display","block")
       }
    });
    

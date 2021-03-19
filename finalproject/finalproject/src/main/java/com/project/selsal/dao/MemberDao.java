@@ -31,7 +31,7 @@ public interface MemberDao {
 	
 	public int deleteAjax(String email);
 	
-	public int updatePW(String newPW, String email,int gender,int birth);
+	public int updatePW(String newPW, String email);
 	
 	public ArrayList<Orders> orderselectAll(String email);
 }

@@ -48,7 +48,7 @@
    </select>
    
    <update id="updatePW">
-        update member set password=#{newPW} where gender = #{gender} and birth = #{birth} and email = #{email}
+        update member set password=#{newPW} where email = #{email}
    </update>
    
    <select id = "orderselectAll" resultType="com.project.selsal.entities.Orders">
