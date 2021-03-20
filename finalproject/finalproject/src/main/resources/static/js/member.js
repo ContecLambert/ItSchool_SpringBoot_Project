@@ -194,24 +194,25 @@ $(document).ready(function() {
 				$('#newPwdInsert1').css('display','block')
 				$('#newPwdInsert2').css('display','block')
 				$('.ui.modal.fourth').modal('show');
-				var newPwd = $('#newpassword').text();
+				var newPwd = $('#newpassword').val();
 				$('#newPWcreate').on('click',function(){
 					$('.ui.modal.fourth').modal('hide');
 					$.ajax({
-			        	type: 'POST',
-			            data: {newPwd: newPwd,email :email},
-			            datatype: 'json',
-			            url: 'PwdUpdate',
-			            success: function(data) {
-			        		$('.description.2').text("성공적으로 변경되었습니다.")
-							$('.ui.modal.fourth').modal('show');
-							document.location.href = "memberLogin";
-      
-			            },
-			            error: function(xhr, status, error) {
-			               alert('ajax error : ' + xhr.status + error);
-			            }
-					});
+                   		type: 'POST',
+                     	data: {newPwd: newPwd,email :email},
+                    	datatype: 'json',
+                     	url: 'PwdUpdate',
+                    	success: function(data) {
+	                     	$('.description.2').text("성공적으로 변경되었습니다.")
+	                    	$('.ui.modal.fourth').modal('show');
+							$('#newPWcreate').on('click',function(){
+	                     		document.location.href = "memberLogin";
+							});
+                    	},
+                    	error: function(xhr, status, error) {
+                        	alert('ajax error : ' + xhr.status + error);
+						}
+					});					
 					
                  	});
               	}

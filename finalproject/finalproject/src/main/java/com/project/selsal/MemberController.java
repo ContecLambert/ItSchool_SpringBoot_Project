@@ -293,7 +293,6 @@ public class MemberController {
 	public String PwdUpdate(Model model,@RequestParam String email,@RequestParam String newPwd) throws Exception {
 		MemberDao dao = sqlSession.getMapper(MemberDao.class);
     	String encodepassword = hashPassword(newPwd);
-    	System.out.println(newPwd);
 		dao.updatePW(encodepassword, email);
 		
 		return "";

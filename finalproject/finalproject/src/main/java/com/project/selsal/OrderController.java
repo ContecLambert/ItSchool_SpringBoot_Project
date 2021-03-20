@@ -35,7 +35,7 @@ public class OrderController {
 	@Autowired
 	Product product;
 	
-	
+	// 온라인 주문 들어가기 위한 session 체크 ajax 연동
 	@RequestMapping(value = "/sessionCheck", method = RequestMethod.POST)
 	@ResponseBody
 	public String sessionCheck(HttpSession session) {
@@ -49,6 +49,7 @@ public class OrderController {
 		return result;
 	}
 	
+	//온라인 주문 페이지 열기
 	@RequestMapping(value = "/Order", method = RequestMethod.GET)
 	public String Order(Locale locale, Model model) throws Exception {
 		ProductDao dao = sqlSession.getMapper(ProductDao.class);
@@ -60,6 +61,7 @@ public class OrderController {
 		return "order/order_insert";
 	}
 	
+	//온라인주문 선택한 재료 담기 ajax연동
 	@RequestMapping(value = "/orderInsert", method = RequestMethod.POST)
 	@ResponseBody
 	public String orderInsert(@RequestParam int procode,@RequestParam int qty,@RequestParam int ordernum) {
@@ -70,6 +72,8 @@ public class OrderController {
 		dao.insertRow(orderdetail);
 		return "";
 	}
+	
+	//온라인주문하기 위한 재고 매진 여부 ajax
 	@RequestMapping(value = "/productCount", method = RequestMethod.POST)
 	@ResponseBody
 	public int productCount() {
@@ -77,6 +81,8 @@ public class OrderController {
 		int result = dao.productCount();
 		return result;
 	}
+	
+	//온라인주문 내역 최종 저장 ajax
 	@RequestMapping(value = "/orderConfirm", method = RequestMethod.POST)
 	@ResponseBody
 	public String orderConfirm(@RequestParam int ordernum,HttpSession session) {
@@ -88,7 +94,7 @@ public class OrderController {
 		return "";
 	}
 	
-	
+	// 미확인 주문 리스트 띄우기
 	@RequestMapping(value = "/noconfirmList", method = RequestMethod.GET)
 	public String noconfirmList(Locale locale, Model model) throws Exception {
 		OrdersDao orderdao = sqlSession.getMapper(OrdersDao.class);
@@ -98,6 +104,7 @@ public class OrderController {
 		return "order/noconfirm_order_list";
 	}
 	
+	// 전체 주문 리스트 띄우기
 	@RequestMapping(value = "/OrderList", method = RequestMethod.GET)
 	public String OrderList(Locale locale, Model model) throws Exception {
 		OrdersDao orderdao = sqlSession.getMapper(OrdersDao.class);
@@ -113,14 +120,16 @@ public class OrderController {
 		return "order/order_list";
 	}
 	
-	@RequestMapping(value = "/orderConfirm", method = RequestMethod.GET)
-	public String orderConfirm(@RequestParam int ordernum) throws Exception {
-		OrdersDao orderdao = sqlSession.getMapper(OrdersDao.class);
-		ArrayList<Orders> orderlist = orderdao.selectAll();
-		
-		return "redirect:order_list";
-	}
+	//orderConfim 중복
+//	@RequestMapping(value = "/orderConfirm", method = RequestMethod.GET)
+//	public String orderConfirm(@RequestParam int ordernum) throws Exception {
+//		OrdersDao orderdao = sqlSession.getMapper(OrdersDao.class);
+//		ArrayList<Orders> orderlist = orderdao.selectAll();
+//		
+//		return "redirect:order_list";
+//	}
 	
+	// 주문 재고와 판매 가능한 남은 재고 비교하기 
 	@RequestMapping(value = "/NowStockChk", method = RequestMethod.POST)
 	@ResponseBody
 	public String NowStockChk(@RequestParam int ordernum) {
@@ -139,6 +148,7 @@ public class OrderController {
 		return result;	
 	}
 	
+	// 미확인주문 리스트 페이지 빠른 주문접수 처리
 	@RequestMapping(value = "/QuickorderConfirm", method = RequestMethod.GET)
 	public String QuickorderConfirm(@RequestParam int ordernum,HttpSession session) throws Exception {
 		OrdersDao orderdao = sqlSession.getMapper(OrdersDao.class);
@@ -183,6 +193,7 @@ public class OrderController {
 		return "redirect:OrderList";
 	}
 	
+	//미확인주문 리스트 페이지 빠른 주문접수취소 처리
 	@RequestMapping(value = "/QuickOrderCancle", method = RequestMethod.POST)
 	@ResponseBody
 	public String QuickOrderCancle(@RequestParam int ordernum) {
