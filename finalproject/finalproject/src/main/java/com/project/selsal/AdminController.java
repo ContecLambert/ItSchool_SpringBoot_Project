@@ -124,7 +124,7 @@ public class AdminController {
 	public String productInsertSave(Model model,@ModelAttribute Product product, 
 			@RequestParam("imagefile") MultipartFile imagefile) throws Exception {
 		ProductDao productDao = sqlSession.getMapper(ProductDao.class);
-		String path = "F:/SPRINGBOOTPROJECT/finalproject/src/main/resources/static/uploadproductimg/";
+		String path = "C:/Users/IT-5C/git/ItSchool_SpringBoot_Project/finalproject/finalproject/src/main/resources/static/uploadproductimg/";
 		String imgname = imagefile.getOriginalFilename();
 		String realpath = "/uploadproductimg/";
 		if (imgname.equals("")) {
@@ -142,9 +142,22 @@ public class AdminController {
 				e.printStackTrace();
 			}
 		}
+		if(product.getProduct_csf() == 1) {
+			product.setCode(Integer.toString(productDao.meatMaxCode()));
+			productDao.insertRow(product);
+			productDao.insertRowMeat(product);
+		}
+		else if(product.getProduct_csf() == 2) {
+			product.setCode(Integer.toString(productDao.vegetableMaxCode()));
+			productDao.insertRow(product);
+			productDao.insertRowVegetable(product);
+		}
+		else if(product.getProduct_csf() == 3) {
+			product.setCode(Integer.toString(productDao.sauceMaxCode()));
+			productDao.insertRow(product);
+			productDao.insertRowSauce(product);
+		}
 		
-		productDao.insertRow1(product);
-		productDao.insertRow2(product);
 		return "redirect:productList";
 	}
 	
