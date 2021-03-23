@@ -299,14 +299,8 @@ $(document).ready(function() {
          	datatype: 'json',
          	url: 'deleteordersAjax',
          	success: function(data) {
-            	if(!data){
-                	alert('이미 취소된 주문입니다')
-               
-	            }
-            	else{
-               		alert('주문이 취소되었습니당')
-            	}
-            
+				alert('주문이 취소되었습니당')
+				document.location.href = "membermypage";
          	},
          	error: function(xhr, status, error) {
             	alert('ajax error : ' + xhr.status + error);
