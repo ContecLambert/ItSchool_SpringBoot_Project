@@ -54,7 +54,7 @@ public class AdminController {
 		return "admin/admin_list";
 	}
 	
-	// 관리자 페이지 bar그래프 안에 들어갈 데이터 ajax 연동 컨트롤러
+	// 관리자 페이지 bar그래프 안에 들어갈 데이터 ajax 연동
 	@RequestMapping(value = "/productDataSelect", method = RequestMethod.POST)
 	@ResponseBody
 	public ArrayList<Product> productDataSelect() {
@@ -63,7 +63,7 @@ public class AdminController {
 		return data;
 	}
 	
-	//관리자 페이지 pie그래프 안에 들어갈 데이터 ajax 연동 컨트롤러
+	//관리자 페이지 pie그래프 안에 들어갈 데이터 ajax 연동
 	@RequestMapping(value = "/SaleProductDataSelect", method = RequestMethod.POST)
 	@ResponseBody
 	public ArrayList<ChartData> SaleProductDataSelect() {

@@ -34,7 +34,7 @@
 	</delete>
 	
 	<select id="maxOrderNum" resultType="Integer">
-		select ifnull(max(ordernum)+1,1) from orderdetail;
+		select ifnull(max(ordernum)+1,1) from orders;
 	</select>
 	
 	

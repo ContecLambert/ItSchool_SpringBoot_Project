@@ -1,7 +1,7 @@
 var index = 0; 
 window.onload = function(){
-   slideShow();
-   semantic.dropdown = {};
+   	slideShow();
+   	semantic.dropdown = {};
 }
 
 function slideShow(){

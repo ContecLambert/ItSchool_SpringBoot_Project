@@ -1,6 +1,3 @@
-function order(){
-
-}
 
 $(document).ready(function() {
 	/** 관리자 주문 들어온 리스트에서 주문 접수처리하는 Script */
@@ -38,7 +35,7 @@ $(document).ready(function() {
 		   	url: 'QuickOrderCancle',
 		   	success: function(data) {
 				alert("주문이 취소처리되었습니다.")
-				document.location.href = "noconfirmList";
+				document.location.href = "OrderList";
 			},
 		   	error: function(xhr, status, error) {
 			alert('ajax error : ' + xhr.status + error);
@@ -129,7 +126,45 @@ $(document).ready(function() {
 		scrollY: 360,
 		scrollCollapse: true
 	});
-	
+	$('#product1').on('mouseover',function(){
+		$('#afterproduct1').css('display','block');
+		$('#afterproduct1').css('opacity','100');
+	});
+   
+  	$('#product1').on('mouseleave',function(){
+      	$('#afterproduct1').css('display','none');
+      	$('#afterproduct1').css('opacity','0');
+   	});
+   
+   	$('#product2').on('mouseover',function(){
+      	$('#afterproduct2').css('display','block');
+      	$('#afterproduct2').css('opacity','100');
+   	});
+   
+   	$('#product2').on('mouseleave',function(){
+      	$('#afterproduct2').css('display','none');
+      	$('#afterproduct2').css('opacity','0');
+   	});
+   
+   	$('#product3').on('mouseover',function(){
+      	$('#afterproduct3').css('display','block');
+      	$('#afterproduct3').css('opacity','100');
+   	});
+   
+  	$('#product3').on('mouseleave',function(){
+      	$('#afterproduct3').css('display','none');
+      	$('#afterproduct3').css('opacity','0');
+   	});
+   
+   	$('#product4').on('mouseover',function(){
+      	$('#afterproduct4').css('display','block');
+      	$('#afterproduct4').css('opacity','100');
+   	});
+   
+   	$('#product4').on('mouseleave',function(){
+      	$('#afterproduct4').css('display','none');
+      	$('#afterproduct4').css('opacity','0');
+   	});
 	
 
 

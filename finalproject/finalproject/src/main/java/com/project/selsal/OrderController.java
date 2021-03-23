@@ -52,11 +52,11 @@ public class OrderController {
 	//온라인 주문 페이지 열기
 	@RequestMapping(value = "/Order", method = RequestMethod.GET)
 	public String Order(Locale locale, Model model) throws Exception {
-		ProductDao dao = sqlSession.getMapper(ProductDao.class);
-		ArrayList<Product> products = dao.selectAll();
+		ProductDao productDao = sqlSession.getMapper(ProductDao.class);
+		ArrayList<Product> products = productDao.selectAll();
 		model.addAttribute("products",products);
-		OrdersDao orderdao = sqlSession.getMapper(OrdersDao.class);
-		int orderNum = orderdao.maxOrderNum();
+		OrdersDao orderDao = sqlSession.getMapper(OrdersDao.class);
+		int orderNum = orderDao.maxOrderNum();
 		model.addAttribute("ordernum",orderNum);
 		return "order/order_insert";
 	}
@@ -65,11 +65,11 @@ public class OrderController {
 	@RequestMapping(value = "/orderInsert", method = RequestMethod.POST)
 	@ResponseBody
 	public String orderInsert(@RequestParam int procode,@RequestParam int qty,@RequestParam int ordernum) {
-		OrdersDao dao = sqlSession.getMapper(OrdersDao.class);
+		OrdersDao orderDao = sqlSession.getMapper(OrdersDao.class);
 		orderdetail.setOrdernum(ordernum);
 		orderdetail.setQty(qty);
 		orderdetail.setProcode(procode);
-		dao.insertRow(orderdetail);
+		orderDao.insertRow(orderdetail);
 		return "";
 	}
 	
@@ -77,8 +77,8 @@ public class OrderController {
 	@RequestMapping(value = "/productCount", method = RequestMethod.POST)
 	@ResponseBody
 	public int productCount() {
-		OrdersDao dao = sqlSession.getMapper(OrdersDao.class);
-		int result = dao.productCount();
+		OrdersDao orderDao = sqlSession.getMapper(OrdersDao.class);
+		int result = orderDao.productCount();
 		return result;
 	}
 	
@@ -86,19 +86,19 @@ public class OrderController {
 	@RequestMapping(value = "/orderConfirm", method = RequestMethod.POST)
 	@ResponseBody
 	public String orderConfirm(@RequestParam int ordernum,HttpSession session) {
-		OrdersDao dao = sqlSession.getMapper(OrdersDao.class);
+		OrdersDao orderDao = sqlSession.getMapper(OrdersDao.class);
 		String email = (String) session.getAttribute("sessionemail");
-		Member member = dao.selectAddress(email);
+		Member member = orderDao.selectAddress(email);
 		String address = "우편번호:"+ member.getZipcode()+" / "+member.getAddress()+" , "+member.getDetailaddress(); 
-		dao.orderInsert(ordernum, email,address);
+		orderDao.orderInsert(ordernum, email,address);
 		return "";
 	}
 	
 	// 미확인 주문 리스트 띄우기
 	@RequestMapping(value = "/noconfirmList", method = RequestMethod.GET)
 	public String noconfirmList(Locale locale, Model model) throws Exception {
-		OrdersDao orderdao = sqlSession.getMapper(OrdersDao.class);
-		ArrayList<Orders> noconfirmlist = orderdao.noConfirmList();
+		OrdersDao orderDao = sqlSession.getMapper(OrdersDao.class);
+		ArrayList<Orders> noconfirmlist = orderDao.noConfirmList();
 		model.addAttribute("noconfirmlist",noconfirmlist);
 		
 		return "order/noconfirm_order_list";
@@ -107,8 +107,8 @@ public class OrderController {
 	// 전체 주문 리스트 띄우기
 	@RequestMapping(value = "/OrderList", method = RequestMethod.GET)
 	public String OrderList(Locale locale, Model model) throws Exception {
-		OrdersDao orderdao = sqlSession.getMapper(OrdersDao.class);
-		ArrayList<Orders> orderlist = orderdao.selectAll();
+		OrdersDao orderDao = sqlSession.getMapper(OrdersDao.class);
+		ArrayList<Orders> orderlist = orderDao.selectAll();
 		
 		for(Orders order:orderlist) {
 			if(order.getCompletedate()== null) {
@@ -151,20 +151,20 @@ public class OrderController {
 	// 미확인주문 리스트 페이지 빠른 주문접수 처리
 	@RequestMapping(value = "/QuickorderConfirm", method = RequestMethod.GET)
 	public String QuickorderConfirm(@RequestParam int ordernum,HttpSession session) throws Exception {
-		OrdersDao orderdao = sqlSession.getMapper(OrdersDao.class);
-		ProductDao productdao = sqlSession.getMapper(ProductDao.class);
-		orderdao.changeConfirm(ordernum);
-		orderdao.completedateUpdate(ordernum);
-		ArrayList<Orderdetail> saleproduct = orderdao.selectSaleProduct(ordernum);
+		OrdersDao orderDao = sqlSession.getMapper(OrdersDao.class);
+		ProductDao productDao = sqlSession.getMapper(ProductDao.class);
+		orderDao.changeConfirm(ordernum);
+		orderDao.completedateUpdate(ordernum);
+		ArrayList<Orderdetail> saleproduct = orderDao.selectSaleProduct(ordernum);
 		for(Orderdetail salepro:saleproduct) {
 			String code = String.valueOf(salepro.getProcode());
-			orderdao.insertSaleProduct(code,salepro.getQty());
-			productdao.Stockadd1(code);
+			orderDao.insertSaleProduct(code,salepro.getQty());
+			productDao.Stockadd1(code);
 		}
-		int totprice = orderdao.OrderTotalPrice(ordernum);
-		orderdao.updateTotalOrderPrice(ordernum, totprice);
+		int totprice = orderDao.OrderTotalPrice(ordernum);
+		orderDao.updateTotalOrderPrice(ordernum, totprice);
 		int point = 0;
-		int level = orderdao.selectMemLevel(ordernum);
+		int level = orderDao.selectMemLevel(ordernum);
 		if(level==5) { // 브론즈
 			point = (int) (totprice*0.05);
 		}else if(level==4){ // 실버
@@ -174,10 +174,10 @@ public class OrderController {
 		}else if(level==2){ // VIP
 			point = (int) (totprice*0.2);
 		}
-		orderdao.updateOrderPoint(ordernum, point);
+		orderDao.updateOrderPoint(ordernum, point);
 		
 		int changelevel=0;
-		int totalorder = orderdao.selectTotalOrder(ordernum);
+		int totalorder = orderDao.selectTotalOrder(ordernum);
 		if(0<=totalorder && totalorder<50000) {
 			changelevel = 5;
 		}else if(50000<=totalorder && totalorder<200000) {
@@ -187,7 +187,7 @@ public class OrderController {
 		}else if(500000<=totalorder) {
 			changelevel = 2;
 		}
-		orderdao.updateMemlevel(ordernum,changelevel);
+		orderDao.updateMemlevel(ordernum,changelevel);
 		
 		
 		return "redirect:OrderList";
@@ -197,12 +197,18 @@ public class OrderController {
 	@RequestMapping(value = "/QuickOrderCancle", method = RequestMethod.POST)
 	@ResponseBody
 	public String QuickOrderCancle(@RequestParam int ordernum) {
-		OrdersDao orderdao = sqlSession.getMapper(OrdersDao.class);
-		orderdao.deleteOrderDetail(ordernum);
-		orderdao.updateOrderConfirm(ordernum);
-		orderdao.completedateUpdate(ordernum);
+		OrdersDao orderDao = sqlSession.getMapper(OrdersDao.class);
+		orderDao.deleteOrderDetail(ordernum);
+		orderDao.updateOrderConfirm(ordernum);
+		orderDao.completedateUpdate(ordernum);
 		return "";	
 	}
-	
-	
+	@RequestMapping(value = "/ingredientDetail", method = RequestMethod.GET)
+	public String ingredientDetail(Locale locale, Model model) throws Exception {
+		ProductDao productDao = sqlSession.getMapper(ProductDao.class);
+		ArrayList<Product> products = productDao.selectAll();
+		model.addAttribute("products",products);
+		return "order/ingredient_detail";
+   }
+
 }

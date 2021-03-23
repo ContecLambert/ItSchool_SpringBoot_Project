@@ -1,14 +1,3 @@
-tinymce.init({
-   selector: 'textarea',
-   plugins: 'a11ychecker advcode casechange formatpainter linkchecker autolink lists checklist media mediaembed pageembed permanentpen powerpaste table advtable tinycomments tinymcespellchecker',
-   toolbar: 'a11ycheck addcomment showcomments casechange checklist code formatpainter pageembed permanentpen table',
-   toolbar_mode: 'floating',
-   tinycomments_mode: 'embedded',
-   tinycomments_author: 'Author name',
-   width: '100%',
-   branding: false
-});
-
 $(document).ready(function() {
    $('.attachbtn').on('click', function() {
       $('#f_attachfile').click();
@@ -57,6 +46,7 @@ $(document).ready(function() {
 
    $('#likelogin').on('click', function() {
       alert("로그인이 필요한 서비스입니다")
+      document.location.href="memberLogin";
    });
 
    $('#deletecomment').on('click', function() {
@@ -76,22 +66,25 @@ $(document).ready(function() {
                   $('.description').text("삭제 되었습니다.");
                   $('.ui.mini.modal.commentmodal').modal('show');
                   document.location.href = "freeBoardDetail?f_seq=" + f_seq;
-
                } else {
                   $('.description').text("삭제 되지 않았습니다.");
                   $('.ui.mini.modal.commentmodal').modal('show');
                }
-
                $('.ui.mini.modal.commentmodal').modal('hide');
             },
             error: function(xhr, status, error) {
-               alert('ajax error' + xhr.status);
+            alert('ajax error' + xhr.status);
             }
          });
       });
 
       $('.commentcancel').on('click', function() {
          $('.ui.mini.modal.commentmodal').modal('hide');
-      });
+         });
+   });
+   
+   $('#noSession').on('click', function(){
+      alert('로그인이 필요한 서비스입니다');
+      document.location.href="memberLogin";
    });
 });
