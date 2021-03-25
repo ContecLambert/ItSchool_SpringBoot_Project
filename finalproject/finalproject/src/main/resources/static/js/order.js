@@ -127,6 +127,10 @@ $(document).ready(function() {
 		scrollY: 360,
 		scrollCollapse: true
 	});
+	$('.div-act1').on('mouseover',function(){
+		$('.div-act2').css('display','block');
+		$('.div-act2').css('opacity','100');
+	})
 	$('#product101').on('mouseover',function(){
 		$('#afterproduct101').css('display','block');
 		$('#afterproduct101').css('opacity','100');
@@ -169,7 +173,6 @@ $(document).ready(function() {
 	$('#product301').on('mouseover',function(){
       	$('#afterproduct301').css('display','block');
       	$('#afterproduct301').css('opacity','100');
-      	$('#afterproduct301').css('margin-top','320px');
    	});
    
    	$('#product301').on('mouseleave',function(){

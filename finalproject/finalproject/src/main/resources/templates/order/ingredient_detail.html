@@ -20,8 +20,8 @@
          <div class = "ui grid thirteen wide column memin" align="center">
 			<div th:each="product: ${products}" style="float:left">
 				<div>
-					<div th:id="|product${product.code}|">
-						<div th:id="|moreDetail${product.code}|" style="display:in-line; width:300px; height:300px">
+					<div class= "div-act1" th:data-num="|product${product.code}|">
+						<div class= "div-act2" th:data-num="|moreDetail${product.code}|" style="display:in-line; width:300px; height:300px">
 							<img th:src="${product.image}" style="position: relative; width:300px;height:250px;top:0;">
 							<div class="ui label" style="width:300px;height:50px;font-size:18px">
 								<input th:id="|procode${product.code}|" type="hidden" th:value="${product.code}">
@@ -29,8 +29,7 @@
 								<span th:text="|${product.saleprice} 원|"></span><br>		
 							</div>
 						</div>
-						<div style="background-color: #72BB2D; position:absolute; width:300px; height:300px;top:0;margin-top:13px; display:none" 
-						th:id="|afterproduct${product.code}|">
+						<div class= "div-act3" th:data-num="|afterproduct${product.code}|" style="background-color: #72BB2D; position:absolute; width:300px; height:300px;top:0;margin-top:13px; display:none">
 							<br><br><br><br><br><br>
 							<Strong th:text="${product.name}" style="font-size:30px"></Strong><br><br>
 							<Strong th:text="|${product.calorie} kcal|" style="font-size:20px"></Strong><br><br>
