@@ -4,7 +4,7 @@
 
 <mapper namespace="com.project.selsal.dao.ProductDao">
 	<select id="selectOutStock" resultType="com.project.selsal.entities.Product">
-		select code,name,stock from product where stock <![CDATA[ <= ]]> 5
+		select code,name,stock from product where stock <![CDATA[ <= ]]> 5 order by stock limit 5
 	</select>
 	
 	<select id="selectAll" resultType="com.project.selsal.entities.Product">

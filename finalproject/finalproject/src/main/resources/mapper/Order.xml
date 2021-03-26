@@ -12,8 +12,11 @@
 		(select ifnull(max(seq)+1,1) from orderdetail A where ordernum=#{ordernum})
 		,#{procode},
 		(select name from product where code = #{procode}),
-		(select saleprice from product where code = #{procode})*#{qty},#{qty}		
-		)
+		(select saleprice from product where code = #{procode})*#{qty},#{qty})
+		ON DUPLICATE KEY UPDATE
+      	proprice = proprice+(select saleprice from product where code = #{procode})*#{qty},
+      	qty = qty+#{qty}
+		
 	</insert>
 	
 	<select id="selectAddress" resultType="com.project.selsal.entities.Member">

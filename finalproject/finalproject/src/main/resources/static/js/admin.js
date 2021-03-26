@@ -12,7 +12,65 @@ function outstockChange2() {
 
 
 $(document).ready(function() {
-	/*Bar Chart START*/
+		
+	/* 제품 등록시 image 추가 script */
+	$(".imagebtn").on('click', function() {
+		$('#imagefile').click();
+		$('#imagefile').change(function() {
+			var imgfilename = $('#imagefile').val();
+			$('.imagename').attr('value', imgfilename);
+		});
+	});
+	/*END*/
+	
+	/** 제품 목록 DataTables Library */
+	$('#productlist').DataTable({
+		deferRender: true,
+		scrollY: 360,
+		scrollCollapse: true
+	});
+	
+	/**제품 상세 거래내역 DataTables Library */
+	$('#productdetaillist').DataTable({
+		aaSorting: [],
+		deferRender: true,
+		scrollY: 360,
+		scrollCollapse: true
+	});
+	/**제품 목록에서 제품 삭제 버튼 Script(Ajax 사용) */
+	$(document).on('click', '#productlist td #productdeletebtn', function() {
+		var row = $(this).closest('tr'); // 현재 선택된 tr을 row로 보겠다
+		var td = row.children();
+		var code = td.eq(0).text();
+
+		$('.ui.mini.modal.delete').modal('show');
+
+		$('#deleteok').on('click', function() {
+			$.ajax({
+				type: 'POST',
+				data: { code: code },
+				datatype: 'json',
+				url: 'productDeleteAjax',
+				success: function(data) {
+					if (data == 'y') {
+						row.remove();
+						$('#resultmessage').text("삭제되었습니다.");
+					} else {
+						$('#resultmessage').text("삭제되지않았습니다.");
+					}
+					$('#successmsg').css('display', "block")
+						.delay(1200).queue(function() {
+							$('#successmsg').css('display', "none").dequeue();
+						});
+					$('.ui.mini.modal.delete').modal('hide');
+				},
+				error: function(xhr, status, error) {
+					alert('ajax error : ' + xhr.status + error);
+				}
+			});
+		});
+	});
+	/*admin Bar Chart START*/
 	var name = [];
 	var stock = [];
 	$.ajax({
@@ -30,6 +88,7 @@ $(document).ready(function() {
 			alert('ajax error : ' + xhr.status + error);
 		}
 	});
+	
 	$("#adminChart1").on('click',function(){
 		var ctx = document.getElementById("Chart1").getContext('2d');
         var Chart1 = new Chart(ctx, {
@@ -74,9 +133,9 @@ $(document).ready(function() {
            }
         });
 	});
-	/*Bar Chart END*/
+	/*admin Bar Chart END*/
 	
-	/*Pie Chart START*/
+	/*admin Pie Chart START*/
 	var salename = [];
 	var salestock = [];
 	$.ajax({
@@ -152,65 +211,7 @@ $(document).ready(function() {
            }
         });
 	});
-	/*Pie Chart END*/
-	
-	/* 제품 등록시 image 추가 script */
-	$(".imagebtn").on('click', function() {
-		$('#imagefile').click();
-		$('#imagefile').change(function() {
-			var imgfilename = $('#imagefile').val();
-			$('.imagename').attr('value', imgfilename);
-		});
-	});
-	/*END*/
-	
-	/** 제품 목록 DataTables Library */
-	$('#productlist').DataTable({
-		deferRender: true,
-		scrollY: 360,
-		scrollCollapse: true
-	});
-	
-	/**제품 상세 거래내역 DataTables Library */
-	$('#productdetaillist').DataTable({
-		aaSorting: [],
-		deferRender: true,
-		scrollY: 360,
-		scrollCollapse: true
-	});
-	/**제품 목록에서 제품 삭제 버튼 Script(Ajax 사용) */
-	$(document).on('click', '#productlist td #productdeletebtn', function() {
-		var row = $(this).closest('tr'); // 현재 선택된 tr을 row로 보겠다
-		var td = row.children();
-		var code = td.eq(0).text();
-
-		$('.ui.mini.modal.delete').modal('show');
-
-		$('#deleteok').on('click', function() {
-			$.ajax({
-				type: 'POST',
-				data: { code: code },
-				datatype: 'json',
-				url: 'productDeleteAjax',
-				success: function(data) {
-					if (data == 'y') {
-						row.remove();
-						$('#resultmessage').text("삭제되었습니다.");
-					} else {
-						$('#resultmessage').text("삭제되지않았습니다.");
-					}
-					$('#successmsg').css('display', "block")
-						.delay(1200).queue(function() {
-							$('#successmsg').css('display', "none").dequeue();
-						});
-					$('.ui.mini.modal.delete').modal('hide');
-				},
-				error: function(xhr, status, error) {
-					alert('ajax error : ' + xhr.status + error);
-				}
-			});
-		});
-	});
+	/*admin Pie Chart END*/
 });
 
 
