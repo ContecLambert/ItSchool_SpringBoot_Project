@@ -59,7 +59,6 @@ public class OrderController {
       model.addAttribute("products",products);
       OrdersDao orderDao = sqlSession.getMapper(OrdersDao.class);
       int orderNum = orderDao.maxOrderNum();
-      System.out.println(orderNum);
       model.addAttribute("ordernum",orderNum);
       ArrayList<Orderdetail> cart = memberDao.orderCart(orderNum);
       model.addAttribute("cart",cart);
