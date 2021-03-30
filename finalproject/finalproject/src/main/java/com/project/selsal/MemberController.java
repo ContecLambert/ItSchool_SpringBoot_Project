@@ -54,7 +54,7 @@ public class MemberController {
       MemberDao dao = sqlSession.getMapper(MemberDao.class);
       Member data = dao.selectOne(member.getEmail());
       if (data == null) {
-         return "/login/login_fail";
+         return "login/login_fail";
       } else {
          boolean passchk = BCrypt.checkpw(member.getPassword(), data.getPassword());
          if (passchk) {
@@ -63,7 +63,7 @@ public class MemberController {
             session.setAttribute("sessionlevel", data.getLevel());
             return "index";
          } else {
-            return "/login/login_fail";
+            return "login/login_fail";
          }
          
       }

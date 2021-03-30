@@ -35,7 +35,7 @@ public interface MemberDao {
 	
 	public Orders orderselectOne(int ordernum);
 	
-	ArrayList<Orderdetail> ordernumselect(int ordernum);
+	public ArrayList<Orderdetail> ordernumselect(int ordernum);
 
 	public int levelUpdate(Member member);
 	
@@ -53,5 +53,5 @@ public interface MemberDao {
 	
 	public ArrayList<Orders> orderselectAll(String email);
 
-	
+	public int deleteOrderCart(int ordernum,String proname) throws Exception;
 }

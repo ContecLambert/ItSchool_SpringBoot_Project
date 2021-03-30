@@ -16,6 +16,10 @@ public interface OrdersDao {
 	// 온라인 주문 선택한 재료 담기 Dao
 	public int insertRow(Orderdetail orderdetail);
 	
+	public int currentOrderNum();
+	
+	public ArrayList<Orderdetail> orderdetailspage(int ordernum);
+	
 	// 온라인 주문 위한 재교매진여부 확인 Dao
 	public int productCount();
 	
@@ -83,4 +87,8 @@ public interface OrdersDao {
 	
 	// 관리자가 회원 리스트에서 회원 등급 수정시 반영 Query
 	public int AdminupdateMemlevel(String email,int level);
+	
+	public int orderTotPrice(int ordernum);
+	
+	public int usePoint(int point);
 }
