@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.project.selsal.dao.MemberDao">
+	<select id="findListMember"
+		resultType="com.project.selsal.entities.Member">
+		select * from member where email like CONCAT('%',#{memfind},'%')
+		or name like CONCAT('%',#{memfind},'%')
+		order by name limit #{memstartrow}, #{memendrow};
+	</select>
+	<select id = "orderselectOne" resultType="com.project.selsal.entities.Orders">
+		select * from orders where ordernum=#{ordernum};
+	</select>
+	
+	<select id = "orderCart" resultType="com.project.selsal.entities.Orderdetail">
+		select sum(qty) as qty,sum(proprice) as proprice,proname from orderdetail where ordernum = #{ordernum} group by proname,proprice
+	</select>
+		
+	
+	<select id = "memberlistfinder" resultType = "Integer">
+		select count(*) from member where email like CONCAT('%',#{memfind},'%')
+		or name like CONCAT('%',#{memfind},'%') order by name asc limit #{memstartrow},#{memendrow}
+	</select>
+	
+	<select id = "pointsum" resultType = "com.project.selsal.entities.Orders">
+		select sum(totprice) from orders where orderconfirm = '1' and email = #{email}
+	</select>
+
+   <select id="selectOne" resultType="com.project.selsal.entities.Member">
+      select * from member where email = #{email}
+    </select>
+    
+    <delete id ="deleteorders">
+    	delete from orders where ordernum = #{ordernum}
+    </delete>
+    
+    <select id = "couponcount" resultType= "Integer">
+    	select count(*) from orders where email =#{email} and orderconfirm=1;
+    </select>
+    
+   <insert id="insertRow">
+      insert into member (email,name,password,phone1,phone2,phone3,zipcode,address,detailaddress,totalorder,point,birth,gender)
+      values(#{email},#{name},#{password},#{phone1},#{phone2},#{phone3},#{zipcode},#{address},#{detailaddress},#{totalorder},#{point},#{birth},#{gender})
+   </insert>
+   <select id ="ordernumselect" resultType = "com.project.selsal.entities.Orderdetail">
+	 select * from orderdetail where ordernum=#{ordernum}
+	</select>
+   
+   <select id="selectAll" resultType="com.project.selsal.entities.Member">
+      select * from member
+   </select>
+   
+      <select id="selectAllcount" resultType="Integer">
+      select count(*) from member
+   </select>
+   
+   <update id="updateRow">
+      update member set name = #{name},password = #{password},phone1 = #{phone1},phone2 = #{phone2},phone3 = #{phone3},
+      zipcode = #{zipcode},address = #{address},detailaddress = #{detailaddress},totalorder= #{totalorder},point = #{point},birth = #{birth}
+      where email = #{email};
+   </update>
+   
+    <update id="updateAjax">
+      update member set level=#{level} where email= #{email}
+   </update>
+   
+    <delete id="deleteAjax">
+      delete from member where email = #{email};
+   </delete>
+   
+   <update id = "levelUpdate">
+      update member set level =if(point>1500,6,9) where email=#{email}
+   </update>
+   
+   <select id="selectIdFind" resultType="string">
+         select email from member where gender = #{gender} and birth = #{birth} and name = #{name}
+   </select>
+   
+   <select id="selectPWFind" resultType="Integer">
+         select count(email) from member where gender = #{gender} and birth = #{birth} and email = #{email}
+   </select>
+   
+   <update id="updatePW">
+        update member set password=#{newPW} where email = #{email}
+   </update>
+   
+   <select id = "orderselectAll" resultType="com.project.selsal.entities.Orders">
+      select * from orders where email=(select email from member where email = #{email})
+   </select>
+   
+   <delete id="deleteOrderCart">
+      delete from orderdetail where ordernum= #{ordernum} and proname = #{proname}
+   </delete>
+</mapper>
