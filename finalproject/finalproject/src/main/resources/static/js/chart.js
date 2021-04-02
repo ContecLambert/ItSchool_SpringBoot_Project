@@ -105,7 +105,7 @@ $(document).ready(function() {
 				legend: { display: false },
 				title: {
 					display: true,
-					text: '남성 단백질류 판매량 TOP3'
+					text: '남성 고기/해물류 판매량 TOP3'
 				}
 			}
 		});
@@ -132,7 +132,7 @@ $(document).ready(function() {
 				legend: { display: false },
 				title: {
 					display: true,
-					text: '여성 단백질류 판매량 TOP3'
+					text: '여성 고기/해물류 판매량 TOP3'
 				}
 			}
 		});
