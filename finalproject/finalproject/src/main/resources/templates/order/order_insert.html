@@ -46,13 +46,14 @@
             	<tr id = "tableidBody" th:each = "cart:${cart}">
             		<td><input type="hidden" name="ordernum"  id="ordernum" th:value="${ordernum}"></td>
             		<td id = "proname" th:text = "${cart.proname}" th:value = "${cart.proname}"></td>
-          	 		<td th:text = "${cart.qty}" th:value = "${cart.qty}"></td>
+          	 		<td id="cartqty" th:text = "${cart.qty}" th:value = "${cart.qty}"></td>
              		<td th:text = "${cart.proprice}" th:value = "${cart.proprice}"></td>
                		<td><i class="close icon" id = "ordercarticon" style = "cursor:pointer"></i></td>
                </tr>
                <tr>
-					<td colspan="5" th:if="${totprices!=null}" th:text = "|주문금액 : ${totprices}|" id="totprice" style = "text-align:right"></td>
-					<td colspan="5" th:if=${totprices==null} th:text = "|주문금액 : 0|" id="totprice" style = "text-align:right"></td>
+               		<td th:text="주문금액" style="text-align:left"></td>
+					<td colspan="5" th:if="${totprices!=null}" th:text = "${totprices}" id="totprice" style = "text-align:right"></td>
+					<td colspan="5" th:if=${totprices==null} th:text = "0" id="totprice" style = "text-align:right"></td>
                </tr>
                <tr>
                   <td class = "orderinsertbtn"colspan="5">

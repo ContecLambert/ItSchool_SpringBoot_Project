@@ -12,7 +12,7 @@ function outstockChange2() {
 
 
 $(document).ready(function() {
-		
+
 	/* 제품 등록시 image 추가 script */
 	$(".imagebtn").on('click', function() {
 		$('#imagefile').click();
@@ -22,14 +22,14 @@ $(document).ready(function() {
 		});
 	});
 	/*END*/
-	
+
 	/** 제품 목록 DataTables Library */
 	$('#productlist').DataTable({
 		deferRender: true,
 		scrollY: 360,
 		scrollCollapse: true
 	});
-	
+
 	/**제품 상세 거래내역 DataTables Library */
 	$('#productdetaillist').DataTable({
 		aaSorting: [],
@@ -73,8 +73,8 @@ $(document).ready(function() {
 	/*admin Bar Chart START*/
 	var name = [];
 	var stock = [];
-	var colorCode1  = ("'rgba("+Math.floor(Math.random()*255)+","+Math.floor(Math.random()*255)+","+Math.floor(Math.random()*255)+","+0.2+")'");
-   	var colorCode2  = ("'rgba("+Math.floor(Math.random()*255)+","+Math.floor(Math.random()*255)+","+Math.floor(Math.random()*255)+","+1+")'");
+	var colorCode1 = ("'rgba(" + Math.floor(Math.random() * 255) + "," + Math.floor(Math.random() * 255) + "," + Math.floor(Math.random() * 255) + "," + 0.2 + ")'");
+	var colorCode2 = ("'rgba(" + Math.floor(Math.random() * 255) + "," + Math.floor(Math.random() * 255) + "," + Math.floor(Math.random() * 255) + "," + 1 + ")'");
 	$.ajax({
 		type: 'POST',
 		datatype: 'json',
@@ -84,59 +84,59 @@ $(document).ready(function() {
 				name.push(data[i].name);
 				stock.push(data[i].stock);
 			}
-			
+
 		},
 		error: function(xhr, status, error) {
 			alert('ajax error : ' + xhr.status + error);
 		}
 	});
-	
-	$("#adminChart1").on('click',function(){
+
+	$("#adminChart1").on('click', function() {
 		var ctx = document.getElementById("Chart1").getContext('2d');
-        var Chart1 = new Chart(ctx, {
-           type: 'bar',
-           data: {
-              labels: name,
-              datasets: [{
-                 data: stock, //컨트롤러에서 모델로 받아온다.
-                 backgroundColor: [ 					
-					'rgba(170, 20, 180, 0.2)',
-					'rgba(221, 2, 92, 0.2)',
-					'rgba(142, 37, 168, 0.2)',
-					'rgba(196, 37, 140, 0.2)',
-					'rgba(112, 77, 250, 0.2)',
-					'rgba(255, 55, 70, 0.2)',
-					'rgba(120, 90, 100, 0.2)',
-					'rgba(50, 9, 200, 0.2)',
-					'rgba(21, 122, 180, 0.2)',
-					'rgba(210, 232, 150, 0.2)'],
-                 borderColor: [
-					'rgba(170, 20, 180, 1)',
-					'rgba(221, 2, 92, 1)',
-					'rgba(142, 37, 168, 1)',
-					'rgba(196, 37, 140, 1)',
-					'rgba(112, 77, 250, 1)',
-					'rgba(255, 55, 70, 1)',
-					'rgba(120, 90, 100, 1)',
-					'rgba(50, 9, 200, 1)',
-					'rgba(21, 122, 180, 1)',
-					'rgba(210, 232, 150, 1)'],
-                 borderWidth: 1
-              }
-              ]
-           },
-           options: {
-              scales: {
-                 yAxes: [{
-                    ticks: {beginAtZero: true}
-                 }]
-              },
-			legend: {display: false},
-           }
-        });
+		var Chart1 = new Chart(ctx, {
+			type: 'bar',
+			data: {
+				labels: name,
+				datasets: [{
+					data: stock, //컨트롤러에서 모델로 받아온다.
+					backgroundColor: [
+						'rgba(170, 20, 180, 0.2)',
+						'rgba(221, 2, 92, 0.2)',
+						'rgba(142, 37, 168, 0.2)',
+						'rgba(196, 37, 140, 0.2)',
+						'rgba(112, 77, 250, 0.2)',
+						'rgba(255, 55, 70, 0.2)',
+						'rgba(120, 90, 100, 0.2)',
+						'rgba(50, 9, 200, 0.2)',
+						'rgba(21, 122, 180, 0.2)',
+						'rgba(210, 232, 150, 0.2)'],
+					borderColor: [
+						'rgba(170, 20, 180, 1)',
+						'rgba(221, 2, 92, 1)',
+						'rgba(142, 37, 168, 1)',
+						'rgba(196, 37, 140, 1)',
+						'rgba(112, 77, 250, 1)',
+						'rgba(255, 55, 70, 1)',
+						'rgba(120, 90, 100, 1)',
+						'rgba(50, 9, 200, 1)',
+						'rgba(21, 122, 180, 1)',
+						'rgba(210, 232, 150, 1)'],
+					borderWidth: 1
+				}
+				]
+			},
+			options: {
+				scales: {
+					yAxes: [{
+						ticks: { beginAtZero: true }
+					}]
+				},
+				legend: { display: false },
+			}
+		});
 	});
 	/*admin Bar Chart END*/
-	
+
 	/*admin Pie Chart START*/
 	var salename = [];
 	var salestock = [];
@@ -149,64 +149,54 @@ $(document).ready(function() {
 				salename.push(data[i].salename);
 				salestock.push(data[i].salestock);
 			}
-			
+
 		},
 		error: function(xhr, status, error) {
 			alert('ajax error : ' + xhr.status + error);
 		}
 	});
-	
-	
-	$("#adminChart2").on('click',function(){
+
+
+	$("#adminChart2").on('click', function() {
 		var ctx = document.getElementById("Chart2").getContext('2d');
-        var Chart2 = new Chart(ctx, {
-           type: 'pie',
-           data: {
-              labels: salename,
-              datasets: [{
+		var Chart2 = new Chart(ctx, {
+			type: 'pie',
+			data: {
+				labels: salename,
+				datasets: [{
 
 
-                 data: salestock, //컨트롤러에서 모델로 받아온다.
-				 backgroundColor: [ 					
-					'rgba(170, 20, 180, 0.2)',
-					'rgba(221, 2, 92, 0.2)',
-					'rgba(142, 37, 168, 0.2)',
-					'rgba(196, 37, 140, 0.2)',
-					'rgba(112, 77, 250, 0.2)',
-					'rgba(255, 55, 70, 0.2)',
-					'rgba(120, 90, 100, 0.2)',
-					'rgba(50, 9, 200, 0.2)',
-					'rgba(21, 122, 180, 0.2)',
-					'rgba(210, 232, 150, 0.2)'],
-                 borderColor: [
-					'rgba(170, 20, 180, 1)',
-					'rgba(221, 2, 92, 1)',
-					'rgba(142, 37, 168, 1)',
-					'rgba(196, 37, 140, 1)',
-					'rgba(112, 77, 250, 1)',
-					'rgba(255, 55, 70, 1)',
-					'rgba(120, 90, 100, 1)',
-					'rgba(50, 9, 200, 1)',
-					'rgba(21, 122, 180, 1)',
-					'rgba(210, 232, 150, 1)'],
-                 borderWidth: 1
-              }
-              ]
-           },
-           options: {
-              scales: {
-                 yAxes: [{
-                    ticks: {
-                       beginAtZero: true
-                    }
-                 }]
-              },
-			legend: {
-			      display: false,
-			      
-			    },
-           }
-        });
+					data: salestock, //컨트롤러에서 모델로 받아온다.
+					backgroundColor: [
+						'rgba(255, 55, 70, 0.2)',
+						'rgba(120, 90, 100, 0.2)',
+						'rgba(50, 9, 200, 0.2)',
+						'rgba(21, 122, 180, 0.2)',
+						'rgba(210, 232, 150, 0.2)'],
+					borderColor: [
+						'rgba(255, 55, 70, 1)',
+						'rgba(120, 90, 100, 1)',
+						'rgba(50, 9, 200, 1)',
+						'rgba(21, 122, 180, 1)',
+						'rgba(210, 232, 150, 1)'],
+					borderWidth: 1
+				}
+				]
+			},
+			options: {
+				scales: {
+					yAxes: [{
+						ticks: {
+							beginAtZero: true
+						}
+					}]
+				},
+				legend: {
+					display: false,
+
+				},
+			}
+		});
 	});
 	/*admin Pie Chart END*/
 });

@@ -15,30 +15,30 @@ $(document).ready(function() {
 	var clscode1 = $('#indexChartbtn1').val();
 	var clscode2 = $('#indexChartbtn2').val();
 	var clscode3 = $('#indexChartbtn3').val();
-	var backgroundColor = 
+	var backgroundColor =
 		['rgba(255, 99, 132, 0.2)',
-		'rgba(54, 162, 235, 0.2)',
-		'rgba(120, 52, 50, 0.2)',
-		'rgba(99, 84, 20, 0.2)',
-		'rgba(200, 120, 230, 0.2)',
-		'rgba(170, 20, 180, 0.2)',
-		'rgba(221, 2, 92, 0.2)',
-		'rgba(142, 37, 168, 0.2)',
-		'rgba(196, 37, 140, 0.2)',
-		'rgba(112, 77, 250, 0.2)',
-		'rgba(255, 55, 70, 0.2)'];
-	var borderColor = 
+			'rgba(54, 162, 235, 0.2)',
+			'rgba(120, 52, 50, 0.2)',
+			'rgba(99, 84, 20, 0.2)',
+			'rgba(200, 120, 230, 0.2)',
+			'rgba(170, 20, 180, 0.2)',
+			'rgba(221, 2, 92, 0.2)',
+			'rgba(142, 37, 168, 0.2)',
+			'rgba(196, 37, 140, 0.2)',
+			'rgba(112, 77, 250, 0.2)',
+			'rgba(255, 55, 70, 0.2)'];
+	var borderColor =
 		['rgba(255, 99, 132, 1)',
-		'rgba(54, 162, 235, 1)',
-		'rgba(120, 52, 50, 1)',
-		'rgba(99, 84, 20, 1)',
-		'rgba(200, 120, 230, 1)',
-		'rgba(170, 20, 180, 1)',
-		'rgba(221, 2, 92, 1)',
-		'rgba(142, 37, 168, 1)',
-		'rgba(196, 37, 140, 1)',
-		'rgba(112, 77, 250, 1)',
-		'rgba(255, 55, 70, 1)']
+			'rgba(54, 162, 235, 1)',
+			'rgba(120, 52, 50, 1)',
+			'rgba(99, 84, 20, 1)',
+			'rgba(200, 120, 230, 1)',
+			'rgba(170, 20, 180, 1)',
+			'rgba(221, 2, 92, 1)',
+			'rgba(142, 37, 168, 1)',
+			'rgba(196, 37, 140, 1)',
+			'rgba(112, 77, 250, 1)',
+			'rgba(255, 55, 70, 1)']
 	$.ajax({
 		type: 'POST',
 		datatype: 'json',
@@ -102,9 +102,9 @@ $(document).ready(function() {
 						ticks: { beginAtZero: true }
 					}]
 				},
-				legend: { display: false},
+				legend: { display: false },
 				title: {
-					display:true,
+					display: true,
 					text: '남성 단백질류 판매량 TOP3'
 				}
 			}
@@ -129,9 +129,9 @@ $(document).ready(function() {
 						ticks: { beginAtZero: true }
 					}]
 				},
-				legend: { display: false},
+				legend: { display: false },
 				title: {
-					display:true,
+					display: true,
 					text: '여성 단백질류 판매량 TOP3'
 				}
 			}
@@ -204,9 +204,9 @@ $(document).ready(function() {
 						ticks: { beginAtZero: true }
 					}]
 				},
-				legend: { display: false},
+				legend: { display: false },
 				title: {
-					display:true,
+					display: true,
 					text: '남성 채소류 판매량 TOP3'
 				}
 			}
@@ -231,9 +231,9 @@ $(document).ready(function() {
 						ticks: { beginAtZero: true }
 					}]
 				},
-				legend: { display: false},
+				legend: { display: false },
 				title: {
-					display:true,
+					display: true,
 					text: '여성 채소류 판매량 TOP3'
 				}
 			}
@@ -300,9 +300,9 @@ $(document).ready(function() {
 						ticks: { beginAtZero: true }
 					}]
 				},
-				legend: { display: false},
+				legend: { display: false },
 				title: {
-					display:true,
+					display: true,
 					text: '남성 소스류 판매량 TOP3'
 				}
 			}
@@ -333,10 +333,10 @@ $(document).ready(function() {
 						ticks: { beginAtZero: true }
 					}]
 				},
-				legend: { display: false},
+				legend: { display: false },
 				title: {
-					display:true,
-					text: '남성 소스류 판매량 TOP3'
+					display: true,
+					text: '여성 소스류 판매량 TOP3'
 				}
 			}
 		});
