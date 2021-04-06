@@ -12,6 +12,136 @@ function outstockChange2() {
 
 
 $(document).ready(function() {
+	$('#companyintro').on('click', function() {
+		alert("준비중입니다.");
+	})
+	$('#news').on('click', function() {
+		alert("준비중입니다.");
+	})
+	/*Bar Chart START*/
+	var name = [];
+	var stock = [];
+	$.ajax({
+		type: 'POST',
+		datatype: 'json',
+		url: 'productDataSelect',
+		success: function(data) {
+			for (var i = 0; i < data.length; i++) {
+				name.push(data[i].name);
+				stock.push(data[i].stock);
+			}
+
+		},
+		error: function(xhr, status, error) {
+			alert('ajax error : ' + xhr.status + error);
+		}
+	});
+
+	$("#adminChart1").on('click', function() {
+		var ctx = document.getElementById("Chart1").getContext('2d');
+		var random1 = 0;
+		var random2 = 0;
+		var random3 = 0;
+		var myColor = [];
+		var myColor2 = [];
+		for (var i = 0; i < name.length; i++) {
+			random1 = Math.floor(Math.random() * 255);
+			random2 = Math.floor(Math.random() * 255);
+			random3 = Math.floor(Math.random() * 255);
+			myColor.push("rgba(" + random1 + ", " + random2 + ", " + random3 + ", " + "0.2)");
+			myColor2.push("rgba(" + random1 + ", " + random2 + ", " + random3 + ", " + "1)");
+		};
+		var Chart1 = new Chart(ctx, {
+			type: 'bar',
+			data: {
+				labels: name,
+				datasets: [{
+					data: stock, //컨트롤러에서 모델로 받아온다.
+					backgroundColor: myColor,
+					borderColor: myColor2,
+					borderWidth: 1
+				}
+				]
+			},
+			options: {
+				scales: {
+					yAxes: [{
+						ticks: {
+							beginAtZero: true
+						}
+					}]
+				},
+				legend: {
+					display: false,
+
+				},
+			}
+		});
+	});
+	/*Bar Chart END*/
+
+	/*Pie Chart START*/
+	var salename = [];
+	var salestock = [];
+	$.ajax({
+		type: 'POST',
+		datatype: 'json',
+		url: 'SaleProductDataSelect',
+		success: function(data) {
+			for (var i = 0; i < data.length; i++) {
+				salename.push(data[i].salename);
+				salestock.push(data[i].salestock);
+			}
+
+		},
+		error: function(xhr, status, error) {
+			alert('ajax error : ' + xhr.status + error);
+		}
+	});
+
+
+	$("#adminChart2").on('click', function() {
+		var ctx = document.getElementById("Chart2").getContext('2d');
+		var random1 = 0;
+		var random2 = 0;
+		var random3 = 0;
+		var myColor = [];
+		var myColor2 = [];
+		for (var i = 0; i < name.length; i++) {
+			random1 = Math.floor(Math.random() * 255);
+			random2 = Math.floor(Math.random() * 255);
+			random3 = Math.floor(Math.random() * 255);
+			myColor.push("rgba(" + random1 + ", " + random2 + ", " + random3 + ", " + "0.2)");
+			myColor2.push("rgba(" + random1 + ", " + random2 + ", " + random3 + ", " + "1)");
+		};
+		var Chart2 = new Chart(ctx, {
+			type: 'pie',
+			data: {
+				labels: salename,
+				datasets: [{
+					data: salestock, //컨트롤러에서 모델로 받아온다.
+					backgroundColor: myColor,
+					borderColor: myColor2,
+					borderWidth: 1
+				}
+				]
+			},
+			options: {
+				scales: {
+					yAxes: [{
+						ticks: {
+							beginAtZero: true
+						}
+					}]
+				},
+				legend: {
+					display: false,
+
+				},
+			}
+		});
+	});
+	/*Pie Chart END*/
 
 	/* 제품 등록시 image 추가 script */
 	$(".imagebtn").on('click', function() {
@@ -70,136 +200,5 @@ $(document).ready(function() {
 			});
 		});
 	});
-	/*admin Bar Chart START*/
-	var name = [];
-	var stock = [];
-	var colorCode1 = ("'rgba(" + Math.floor(Math.random() * 255) + "," + Math.floor(Math.random() * 255) + "," + Math.floor(Math.random() * 255) + "," + 0.2 + ")'");
-	var colorCode2 = ("'rgba(" + Math.floor(Math.random() * 255) + "," + Math.floor(Math.random() * 255) + "," + Math.floor(Math.random() * 255) + "," + 1 + ")'");
-	$.ajax({
-		type: 'POST',
-		datatype: 'json',
-		url: 'productDataSelect',
-		success: function(data) {
-			for (var i = 0; i < data.length; i++) {
-				name.push(data[i].name);
-				stock.push(data[i].stock);
-			}
-
-		},
-		error: function(xhr, status, error) {
-			alert('ajax error : ' + xhr.status + error);
-		}
-	});
-
-	$("#adminChart1").on('click', function() {
-		var ctx = document.getElementById("Chart1").getContext('2d');
-		var Chart1 = new Chart(ctx, {
-			type: 'bar',
-			data: {
-				labels: name,
-				datasets: [{
-					data: stock, //컨트롤러에서 모델로 받아온다.
-					backgroundColor: [
-						'rgba(170, 20, 180, 0.2)',
-						'rgba(221, 2, 92, 0.2)',
-						'rgba(142, 37, 168, 0.2)',
-						'rgba(196, 37, 140, 0.2)',
-						'rgba(112, 77, 250, 0.2)',
-						'rgba(255, 55, 70, 0.2)',
-						'rgba(120, 90, 100, 0.2)',
-						'rgba(50, 9, 200, 0.2)',
-						'rgba(21, 122, 180, 0.2)',
-						'rgba(210, 232, 150, 0.2)'],
-					borderColor: [
-						'rgba(170, 20, 180, 1)',
-						'rgba(221, 2, 92, 1)',
-						'rgba(142, 37, 168, 1)',
-						'rgba(196, 37, 140, 1)',
-						'rgba(112, 77, 250, 1)',
-						'rgba(255, 55, 70, 1)',
-						'rgba(120, 90, 100, 1)',
-						'rgba(50, 9, 200, 1)',
-						'rgba(21, 122, 180, 1)',
-						'rgba(210, 232, 150, 1)'],
-					borderWidth: 1
-				}
-				]
-			},
-			options: {
-				scales: {
-					yAxes: [{
-						ticks: { beginAtZero: true }
-					}]
-				},
-				legend: { display: false },
-			}
-		});
-	});
-	/*admin Bar Chart END*/
-
-	/*admin Pie Chart START*/
-	var salename = [];
-	var salestock = [];
-	$.ajax({
-		type: 'POST',
-		datatype: 'json',
-		url: 'SaleProductDataSelect',
-		success: function(data) {
-			for (var i = 0; i < data.length; i++) {
-				salename.push(data[i].salename);
-				salestock.push(data[i].salestock);
-			}
-
-		},
-		error: function(xhr, status, error) {
-			alert('ajax error : ' + xhr.status + error);
-		}
-	});
-
-
-	$("#adminChart2").on('click', function() {
-		var ctx = document.getElementById("Chart2").getContext('2d');
-		var Chart2 = new Chart(ctx, {
-			type: 'pie',
-			data: {
-				labels: salename,
-				datasets: [{
-
-
-					data: salestock, //컨트롤러에서 모델로 받아온다.
-					backgroundColor: [
-						'rgba(255, 55, 70, 0.2)',
-						'rgba(120, 90, 100, 0.2)',
-						'rgba(50, 9, 200, 0.2)',
-						'rgba(21, 122, 180, 0.2)',
-						'rgba(210, 232, 150, 0.2)'],
-					borderColor: [
-						'rgba(255, 55, 70, 1)',
-						'rgba(120, 90, 100, 1)',
-						'rgba(50, 9, 200, 1)',
-						'rgba(21, 122, 180, 1)',
-						'rgba(210, 232, 150, 1)'],
-					borderWidth: 1
-				}
-				]
-			},
-			options: {
-				scales: {
-					yAxes: [{
-						ticks: {
-							beginAtZero: true
-						}
-					}]
-				},
-				legend: {
-					display: false,
-
-				},
-			}
-		});
-	});
-	/*admin Pie Chart END*/
 });
-
-
 
