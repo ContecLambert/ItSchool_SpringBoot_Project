@@ -1,3 +1,82 @@
+#memberinsertmain{
+	
+    width: 1200px;
+    margin: 0 auto;
+    
+}
+#memberinsertdiv{
+	table-layout: fixed;
+    border: 1px solid #d7d5d5;
+    line-height: 180%;
+    margin: 0;
+    padding: 0;
+}
+.memberinserttitle{
+	margin: 0 0 20px;
+    padding: 0 0 15px;
+    border-bottom: 1px solid #e8e8e8;
+    font-size: 0;
+    min-height: auto;
+}
+.memberinserttitle>h2{
+	display: inline-block;
+    padding: 0 10px 0 0;
+    color: #323232;
+    font-size: 20px;
+    line-height: 34px;
+    *display: inline;
+    *zoom: 1;
+    background: none;
+}
+
+.description{
+	font-size:15px;
+	font-weight:bold;
+	text-align:center;
+	margin:20px 0 20px 0;
+}
+
+#emailicon{
+	display: flex;
+    flex-direction: column;
+    height: 100%; 
+	margin: 0 auto;
+}
+
+.memberinserttable>tbody>tr>td{
+	width: auto;
+    padding: 10px 0 8px 10px;
+    border-top: 1px solid #e8e8e8;
+}
+.memberinserttable>tbody>tr>th{
+	width: 130px;
+    padding: 10px 0 8px 20px;
+    border-top: 1px solid #e8e8e8;
+    border-right: 1px solid #e8e8e8;
+    background-color: #fbfafa;
+    text-align: left;
+    font-weight: normal;
+    vertical-align: middle;
+}
+.memberinserttable>tbody>tr>td>input{
+	padding: 4px;
+    border: 1px solid #d9d9d9;
+    color: #202020;
+    font-size: 12px;
+    outline: medium none;
+}
+    
+#zipcode{
+	width:80px;
+}
+#addr1{
+	width:220px;
+}
+#addr2{
+	width:250px;
+}
+
+
 .myInfo{
 	position:relative;
 	margin-bottom:20px;

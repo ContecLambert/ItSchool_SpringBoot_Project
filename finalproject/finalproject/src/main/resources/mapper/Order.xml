@@ -18,7 +18,6 @@
 		proprice = proprice+(select saleprice from product where code =
 		#{procode})*#{qty},
 		qty = qty+#{qty}
-
 	</insert>
 
 	<select id="currentOrderNum" resultType="Integer">
@@ -42,9 +41,11 @@
 	<delete id="orderDelete">
 		delete from orderdetail where ordernum=#{ordernum}
 	</delete>
-
+	<select id="emptyOrderNum" resultType="Integer">
+		 SELECT min(ordernum+1) FROM orderdetail WHERE (ordernum+1) NOT IN (SELECT ordernum FROM orderdetail)
+	</select>
 	<select id="maxOrderNum" resultType="Integer">
-		select ifnull(max(ordernum)+1,1) from orders;
+		select ifnull(max(ordernum)+1,1) from orderdetail;
 	</select>
 
 	<insert id="insertRow2">
@@ -61,8 +62,7 @@
 		select * from productdetail where code =#{code} order by transdate desc
 	</select>
 
-	<select id="productChartData"
-		resultType="com.project.selsal.entities.Product">
+	<select id="productChartData" resultType="com.project.selsal.entities.Product">
 		select name,stock from product
 	</select>
 
@@ -70,13 +70,11 @@
 		select count(*) from orders where orderconfirm = 0;
 	</select>
 
-	<select id="noConfirmList"
-		resultType="com.project.selsal.entities.Orders">
+	<select id="noConfirmList" resultType="com.project.selsal.entities.Orders">
 		select * from orders where orderconfirm = 0 order by ordernum desc;
 	</select>
 
-	<select id="selectAll"
-		resultType="com.project.selsal.entities.Orders">
+	<select id="selectAll" resultType="com.project.selsal.entities.Orders">
 		select ordernum,email,orderadd,date,totprice,orderconfirm,name,completedate
 		from orders order by ordernum desc;
 	</select>
@@ -164,5 +162,14 @@
 	<update id="usePoint">
 		update member set point = point-#{point} where email = #{email}
 	</update>
+
+	<select id="checkStock" resultType="Integer">
+		select stock from product where code = #{procode}
+	</select>
+
+	<select id="checkQty" resultType="Integer">
+		select qty from orderdetail where ordernum = #{ordernum} and procode =
+		#{procode}
+	</select>
 
 </mapper>

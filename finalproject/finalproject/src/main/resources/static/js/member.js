@@ -314,4 +314,15 @@ $(document).ready(function() {
          }
       }
    });
+   
+   $('#memberInsert').on('click',function(){
+      var password = $('#password').val();
+      var passwordchk = $('#passwordchk').val();
+      if(password==passwordchk){
+         alert('hi');
+         $('#memberinsertform').attr('action','memberInsertSave').submit();
+      } else{
+         alert('비밀번호가 일치하지 않습니다');
+      }
+   });
 });
