@@ -99,6 +99,10 @@
 		resultType="com.project.selsal.entities.Orderdetail">
 		select procode,qty from orderdetail where ordernum=#{ordernum}
 	</select>
+	
+	<select id="selectOrderEmail" resultType="com.project.selsal.entities.Orders">
+		select email from orders where ordernum =#{ordernum}
+	</select>
 
 	<select id="selectNowStock"
 		resultType="com.project.selsal.entities.Product">
@@ -156,7 +160,7 @@
 	</update>
 
 	<select id="orderTotPrice" resultType="Integer">
-		select sum(proprice*qty) from orderdetail where ordernum = #{ordernum}
+		select sum(proprice) from orderdetail where ordernum = #{ordernum}
 	</select>
 
 	<update id="usePoint">

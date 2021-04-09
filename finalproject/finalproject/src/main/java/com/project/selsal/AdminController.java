@@ -76,7 +76,6 @@ public class AdminController {
 	// 관리자 페이지 내 5개 이하 재료 빠른 추가주문처리
 	@RequestMapping(value = "/fastOrder", method = RequestMethod.GET)
 	public String fastOrder(Locale locale, Model model,@RequestParam String code,@RequestParam String name) throws Exception {
-		System.out.println(code+" "+name);
 		HashMap codename = new HashMap();
 		codename.put("code",code);
 		codename.put("name",name);

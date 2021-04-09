@@ -59,6 +59,10 @@ public interface OrdersDao {
 	// 판매 완료 재고 담아오기
 	public ArrayList<Orderdetail> selectSaleProduct(int ordernum);
 	
+	// ordernum에 해당하는 이메일 담기
+	
+	public Orders selectOrderEmail(int ordernum);
+	
 	// 판매 완료 재고 Productdetail에 추가
 	public int insertSaleProduct(String code,int saleqty);
 	

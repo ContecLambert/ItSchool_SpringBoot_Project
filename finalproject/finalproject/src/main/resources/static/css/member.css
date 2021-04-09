@@ -95,13 +95,30 @@
     padding-left: 118px;
     background-size: 85px 97px;
 }
+.aobox{
+	position: relative;
+}
 .myInfo_inside4{
 	float:left;
-	margin-top:20px;
+	width:550px;
+	margin-top:10px;
     padding: 24px 33px;
     background-color: #f8f8f8;
 }
-
+.myInfo_inside7{
+	background-color:#fff;
+	float: left;
+    width: 400px;
+    height: 169px;
+    margin-left:10px;
+    margin-top:20px;
+    padding-top: 22px;
+    font-family: "NanumSquareOTFR";
+    text-align: center;
+    border: 3px solid red;
+    color: red;
+	
+}
 .myInfo_text{
 	padding:10px 0 10px;
 	color:#111;
@@ -296,6 +313,7 @@ div {
 }
 
 .myInfo_inside2{
+	background-color:#fff;
 	float: left;
     width: 205px;
     height: 169px;
@@ -313,11 +331,25 @@ div {
     font-size: 20px;
 	
 }
+#viewdetails:hover{
+	cursor:pointer;
+	border: 0;
+	color: #fff;
+	width: 80px;
+	height:30px;
+	background-color:#ffa800;
+}
 #viewdetails{
+	cursor:pointer;
+	border: 0;
+	color: #fff;
+	width: 80px;
+	height:30px;
 	background-color:#73BC2D;
 }
 #buttonorder{
-	padding-left:30px;
+	padding-left:10px;
+	padding-right:10px;
 }
 .myInfo_inside6{
 	float: left;

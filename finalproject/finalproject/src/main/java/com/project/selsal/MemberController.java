@@ -66,7 +66,7 @@ public class MemberController {
             session.setAttribute("sessionlevel", data.getLevel());
             return "index";
          } else {
-            return "/login/login_fail";
+            return "login/login_fail";
          }
          
       }
